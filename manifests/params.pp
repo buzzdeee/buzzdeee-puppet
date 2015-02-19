@@ -28,4 +28,6 @@ class puppet::params {
   $client_service_flags = undef
   $configtimeout = '10m'
   $server = undef
+  $package_ensure = 'installed'
+  $package_name = 'puppet'
 }

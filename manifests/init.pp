@@ -7,9 +7,9 @@ class puppet (
   $service_name = $puppet::params::service_name,
   $service_ensure = $puppet::params::service_ensure,
   $service_enable = $puppet::params::service_enable,
+  $package_ensure = $puppet::params::package_ensure,
+  $package_name   = $puppet::params::package_name,
 ) inherits puppet::params { 
-
-  package { 'puppet': ensure => "present" }
 
   if $master == undef {
     $_master_ensure = "stopped"
@@ -19,22 +19,27 @@ class puppet (
     $_master_enable = "true"
   }
 
-  class { puppet::config:
+  class { 'puppet::install':
+    package_name   => $package_name,
+    package_ensure => $package_ensure,
+  }
+
+  class { 'puppet::config':
     configtimeout => $configtimeout,
     server        => $server,
   }
 
   if $service_name {
-    service { $service_name:
-      require => Package['puppet'],
-      ensure  => $service_ensure,
-      enable  => $service_enable,
-      flags   => $client_service_flags,
+    class { 'puppet::service':
+      service_name   => $service_name,
+      service_ensure => $service_ensure,
+      service_enable => $service_enable,
+      service_flags  => $client_service_flags,
     }
+    Class['puppet::config'] ->
+    Class['puppet::service']
   }
-  #service { "puppetmasterd":
-  #  require 	=> Package['puppet'],
-  #  ensure  	=> $_master_ensure,
-  #  enable  	=> $_master_enable,
-  #}
+
+  Class['puppet::install'] ->
+  Class['puppet::config']
 }
