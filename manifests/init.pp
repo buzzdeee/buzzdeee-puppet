@@ -7,6 +7,7 @@ class puppet (
   $service_name = $puppet::params::service_name,
   $service_ensure = $puppet::params::service_ensure,
   $service_enable = $puppet::params::service_enable,
+  $service_provider = $puppet::params::service_provider,
   $package_ensure = $puppet::params::package_ensure,
   $package_name   = $puppet::params::package_name,
 ) inherits puppet::params { 
@@ -31,10 +32,11 @@ class puppet (
 
   if $service_name {
     class { 'puppet::service':
-      service_name   => $service_name,
-      service_ensure => $service_ensure,
-      service_enable => $service_enable,
-      service_flags  => $client_service_flags,
+      service_name     => $service_name,
+      service_ensure   => $service_ensure,
+      service_enable   => $service_enable,
+      service_flags    => $client_service_flags,
+      service_provider => $service_provider,
     }
     Class['puppet::config'] ->
     Class['puppet::service']

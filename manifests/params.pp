@@ -3,14 +3,17 @@ class puppet::params {
   case $::osfamily {
     'OpenBSD': {
       $service_name = 'puppetd'
+      $service_provider = undef
     }
     'Suse': {
       case $::operatingsystem {
         'SLES': {
           $service_name = 'puppet'
+          $service_provider = undef
         }
         'OpenSuSE': {
-          $service_name = undef
+          $service_name = 'puppet.service'
+          $service_provider = 'systemd'
         }
         default: {
           fail("Unsupported platform: ${::osfamily}/${operatingsystem}")
