@@ -3,9 +3,9 @@ class puppet::params {
   case $::osfamily {
     'OpenBSD': {
       if versioncmp( "$::operatingsystemrelease", '5.7' ) > 0 {
-        $service_name = 'puppetd'
-      } else {
         $service_name = 'puppet'
+      } else {
+        $service_name = 'puppetd'
       }
       $service_provider = undef
     }
