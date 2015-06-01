@@ -7,6 +7,7 @@ class puppet (
   $client_service_flags = $puppet::params::client_service_flags,
   $enable_msgpack_serialization = $puppet::params::enable_msgpack_serialization,
   $preferred_serialization_format = $puppet::params::preferred_serialization_format,
+  $config_defaultsfile = $puppet::params::config_defaultsfile,
   $service_name = $puppet::params::service_name,
   $service_ensure = $puppet::params::service_ensure,
   $service_enable = $puppet::params::service_enable,
@@ -36,6 +37,7 @@ class puppet (
     preferred_serialization_format => $preferred_serialization_format,
     configtimeout                  => $configtimeout,
     server                         => $server,
+    $config_defaultsfile           => $config_defaultsfile
   }
 
   if $service_name {

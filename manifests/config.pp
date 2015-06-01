@@ -6,6 +6,7 @@ class puppet::config (
   $configtimeout,
   $server,
   $enable_msgpack_serialization,
+  $config_defaultsfile,
 ) {
 
   if $configtimeout {
@@ -35,6 +36,17 @@ class puppet::config (
       section => 'main',
       setting => 'preferred_serialization_format',
       value   => $preferred_serialization_format,
+    }
+  }
+
+  if $config_defaultsfile {
+    if $server {
+      ini_setting { 'config_defaultsfile_server':
+        ensure  => 'present',
+        path    => $config_defaultsfile,
+        setting => 'PUPPET_SERVER',
+        value   => $server,
+      }
     }
   }
 

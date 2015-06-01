@@ -11,16 +11,19 @@ class puppet::params {
       }
       $service_provider = undef
       $msgpack_package_name = 'ruby21-msgpack'
+      $config_defaultsfile = undef
     }
     'Suse': {
       case $::operatingsystem {
         'SLES': {
           $service_name = 'puppet'
           $service_provider = undef
+          $config_defaultsfile = '/etc/sysconfig/puppet'
         }
         'OpenSuSE': {
           $service_name = 'puppet.service'
           $service_provider = 'systemd'
+          $config_defaultsfile = undef
         }
         default: {
           fail("Unsupported platform: ${::osfamily}/${::operatingsystem}")
