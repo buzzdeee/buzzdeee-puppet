@@ -44,6 +44,7 @@ class puppet::config (
       ini_setting { 'config_defaultsfile_server':
         ensure  => 'present',
         path    => $config_defaultsfile,
+        section => '',
         setting => 'PUPPET_SERVER',
         value   => $server,
       }
