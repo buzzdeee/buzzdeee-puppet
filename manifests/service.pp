@@ -1,3 +1,5 @@
+# private class, do not use directly
+# takes care about the service management
 class puppet::service (
   $service_ensure,
   $service_enable,
