@@ -48,7 +48,7 @@ class puppet (
       service_flags    => $client_service_flags,
       service_provider => $service_provider,
     }
-    Class['puppet::config'] ->
+    Class['puppet::config'] ~>
     Class['puppet::service']
   }
 
