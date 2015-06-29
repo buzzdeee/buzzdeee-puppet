@@ -42,11 +42,12 @@ class puppet::config (
   if $config_defaultsfile {
     if $server {
       ini_setting { 'config_defaultsfile_server':
-        ensure  => 'present',
-        path    => $config_defaultsfile,
-        section => '',
-        setting => 'PUPPET_SERVER',
-        value   => $server,
+        ensure            => 'present',
+        path              => $config_defaultsfile,
+        section           => '',
+        setting           => 'PUPPET_SERVER',
+        value             => $server,
+        key_val_separator => '=',
       }
     }
   }
