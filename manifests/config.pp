@@ -41,17 +41,8 @@ class puppet::config (
 
   if $config_defaultsfile {
     # everything important is set in the puppet.conf
-    ini_setting { 'config_defaultsfile_server':
-      ensure            => 'absent',
-      path              => $config_defaultsfile,
-      section           => '',
-      setting           => 'PUPPET_SERVER',
-    }
-    ini_setting { 'config_defaultsfile_puppet_extra_opts':
-      ensure            => 'absent',
-      path              => $config_defaultsfile,
-      section           => '',
-      setting           => 'PUPPET_EXTRA_OPTS',
+    file { $config_defaultsfile:
+      content => '';
     }
   }
 
