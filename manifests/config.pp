@@ -40,15 +40,18 @@ class puppet::config (
   }
 
   if $config_defaultsfile {
-    if $server {
-      ini_setting { 'config_defaultsfile_server':
-        ensure            => 'present',
-        path              => $config_defaultsfile,
-        section           => '',
-        setting           => 'PUPPET_SERVER',
-        value             => $server,
-        key_val_separator => '=',
-      }
+    # everything important is set in the puppet.conf
+    ini_setting { 'config_defaultsfile_server':
+      ensure            => 'absent',
+      path              => $config_defaultsfile,
+      section           => '',
+      setting           => 'PUPPET_SERVER',
+    }
+    ini_setting { 'config_defaultsfile_puppet_extra_opts':
+      ensure            => 'absent',
+      path              => $config_defaultsfile,
+      section           => '',
+      setting           => 'PUPPET_EXTRA_OPTS',
     }
   }
 
