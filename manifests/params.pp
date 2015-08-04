@@ -10,7 +10,11 @@ class puppet::params {
         $service_name = 'puppetd'
       }
       $service_provider = undef
-      $msgpack_package_name = 'ruby21-msgpack'
+      if (versioncmp(::kernelversion, '5.8') < 0) {
+        $msgpack_package_name = 'ruby21-msgpack'
+      } else {
+        $msgpack_package_name = 'ruby22-msgpack'
+      }
       $config_defaultsfile = undef
     }
     'Suse': {
