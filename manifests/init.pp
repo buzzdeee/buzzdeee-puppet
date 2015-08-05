@@ -1,6 +1,7 @@
 # the main class of the module
 
 class puppet (
+  $config_dir = $puppet::params::config_dir,
   $master = $puppet::params::master,
   $configtimeout = $puppet::params::configtimeout,
   $server = $puppet::params::server,
@@ -9,20 +10,58 @@ class puppet (
   $preferred_serialization_format = $puppet::params::preferred_serialization_format,
   $config_defaultsfile = $puppet::params::config_defaultsfile,
   $service_name = $puppet::params::service_name,
+  $master_service_name = $puppet::params::master_service_name,
+  $master_service_flags = $puppet::params::master_service_flags,
   $service_ensure = $puppet::params::service_ensure,
   $service_enable = $puppet::params::service_enable,
   $service_provider = $puppet::params::service_provider,
   $package_ensure = $puppet::params::package_ensure,
   $package_name   = $puppet::params::package_name,
   $msgpack_package_name = $puppet::params::msgpack_package_name,
+  $rubyversion = $puppet::params::rubyversion,
+  $unicornflags = $puppet::params::unicornflags,
 ) inherits puppet::params {
 
-  if $master == undef {
-    $_master_ensure = 'stopped'
-    $_master_enable = false
-  } else {
-    $_master_esure = 'running'
-    $_master_enable = true
+  if $master {
+    case $master {
+      'standalone': {
+        class { 'puppet::master::standalone': 
+          ensure               => 'running',
+          enable               => true,
+          master_service_name  => $master_service_name,
+          master_service_flags => $master_service_flags,
+        }
+      }
+      'unicorn': {
+        class { 'puppet::master::standalone': 
+          ensure               => 'stopped',
+          enable               => false,
+          master_service_name  => $master_service_name,
+          master_service_flags => $master_service_flags,
+        }
+        class { 'puppet::master::unicorn': 
+          ensure          => 'running',
+          enable          => true,
+          unicorn_workers => $unicorn_workers,
+          config_dir      => $config_dir,
+          unicorn_socket  => $unicorn_socket,
+          unicorn_pid     => $unicorn_pid,
+          unicorn_flags   => $unicorn_flags,
+        }
+      }
+      'passenger': {
+        class { 'puppet::master::standalone': 
+          ensure               => 'stopped',
+          enable               => false,
+          master_service_name  => $master_service_name,
+          master_service_flags => $master_service_flags,
+        }
+
+      }
+      default: {
+        fail("${::modulename}: master must be one of 'standalone', 'unicorn', or 'passenger'")
+      }
+    }
   }
 
   class { 'puppet::install':
