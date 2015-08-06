@@ -31,7 +31,6 @@ $webserver_frontend,
     group   => '0',
     mode    => '0555',
     content => template('puppet/puppetmaster_unicorn.erb'),
-    before  => Service['puppetmaster_unicorn'],
   }
 
   file { $unicorn_conf:
@@ -49,7 +48,7 @@ $webserver_frontend,
   }
 
   Package[$unicorn_package] ->
+  File[$unicorn_conf] ~>
   File['/etc/rc.d/puppetmaster_unicorn'] ~>
   Service['puppetmaster_unicorn']
-
 }
