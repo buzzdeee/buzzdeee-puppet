@@ -1,9 +1,12 @@
 class puppet::master::unicorn (
 $ensure,
 $enable,
+$rubyversion,
+$rubyunicorn,
 $unicorn_workers,
 $unicorn_package,
 $config_dir,
+$unicorn_conf,
 $unicorn_socket,
 $unicorn_pid,
 $unicorn_flags,
@@ -19,7 +22,7 @@ $webserver_frontend,
     $files_ensure = 'absent'
   }
 
-  file { "/etc/rc.d/puppetmaster_unicorn":
+  file { '/etc/rc.d/puppetmaster_unicorn':
     ensure  => $files_ensure,
     owner   => 'root',
     group   => '0',
@@ -27,12 +30,12 @@ $webserver_frontend,
     content => template('puppet/puppetmaster_unicorn.erb'),
   }
 
-  file { "/etc/rc.d/puppetmaster_unicorn":
+  file { $unicorn_conf:
     ensure  => $files_ensure,
     owner   => 'root',
     group   => '0',
     mode    => '0444',
-    content => template('puppet/puppetmaster_unicorn.erb'),
+    content => template('puppet/unicorn.conf.erb'),
   }
 
   service { 'puppetmaster_unicorn':
