@@ -2,6 +2,7 @@
 
 class puppet (
   $config_dir = $puppet::params::config_dir,
+  $run_dir = $puppet::params::run_dir,
   $master = $puppet::params::master,
   $configtimeout = $puppet::params::configtimeout,
   $server = $puppet::params::server,
@@ -19,7 +20,8 @@ class puppet (
   $package_name   = $puppet::params::package_name,
   $msgpack_package_name = $puppet::params::msgpack_package_name,
   $rubyversion = $puppet::params::rubyversion,
-  $unicornflags = $puppet::params::unicornflags,
+  $unicorn_flags = $puppet::params::unicornflags,
+  $unicorn_workers = $puppet::params::unicorn_workers,
   $webserver_frontend = $puppet::params::webserverfrontend,
 ) inherits puppet::params {
 
@@ -38,10 +40,14 @@ class puppet (
         class { 'puppet::master::unicorn': 
           ensure             => 'stopped',
           enable             => false,
+          rubyversion        => $rubyversion,
+          rubyunicorn        => $puppet::params::rubyunicorn,
           unicorn_workers    => $unicorn_workers,
+          unicorn_package    => $puppet::params::unicorn_package,
           config_dir         => $config_dir,
-          unicorn_socket     => $unicorn_socket,
-          unicorn_pid        => $unicorn_pid,
+          unicorn_conf       => $puppet::params::unicorn_conf,
+          unicorn_socket     => $puppet::params::unicorn_socket,
+          unicorn_pid        => $puppet::params::unicorn_pid,
           unicorn_flags      => $unicorn_flags,
           webserver_frontend => $webserver_frontend,
 	  before             => Class['puppet::master::webrick'],
@@ -63,10 +69,14 @@ class puppet (
         class { 'puppet::master::unicorn': 
           ensure             => 'running',
           enable             => true,
+          rubyversion        => $rubyversion,
+          rubyunicorn        => $puppet::params::rubyunicorn,
           unicorn_workers    => $unicorn_workers,
+          unicorn_package    => $puppet::params::unicorn_package,
           config_dir         => $config_dir,
-          unicorn_socket     => $unicorn_socket,
-          unicorn_pid        => $unicorn_pid,
+          unicorn_conf       => $puppet::params::unicorn_conf,
+          unicorn_socket     => $puppet::params::unicorn_socket,
+          unicorn_pid        => $puppet::params::unicorn_pid,
           unicorn_flags      => $unicorn_flags,
           webserver_frontend => $webserver_frontend,
         }
@@ -87,10 +97,14 @@ class puppet (
         class { 'puppet::master::unicorn': 
           ensure             => 'stopped',
           enable             => false,
+          rubyversion        => $rubyversion,
+          rubyunicorn        => $puppet::params::rubyunicorn,
           unicorn_workers    => $unicorn_workers,
+          unicorn_package    => $puppet::params::unicorn_package,
           config_dir         => $config_dir,
-          unicorn_socket     => $unicorn_socket,
-          unicorn_pid        => $unicorn_pid,
+          unicorn_conf       => $puppet::params::unicorn_conf,
+          unicorn_socket     => $puppet::params::unicorn_socket,
+          unicorn_pid        => $puppet::params::unicorn_pid,
           unicorn_flags      => $unicorn_flags,
           webserver_frontend => $webserver_frontend,
 	  before             => Class['puppet::master::passenger'],

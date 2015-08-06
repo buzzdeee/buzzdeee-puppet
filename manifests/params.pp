@@ -20,7 +20,8 @@ class puppet::params {
       $msgpack_package_name = "ruby${rubyversion}-msgpack"
       $config_defaultsfile = undef
       $rubyunicorn = "/usr/local/bin/unicorn${rubyversion}"
-      $unicornflags = "-D -c ${config_dir}/unicorn.conf"
+      $unicorn_conf = "${config_dir}/unicorn.conf"
+      $unicorn_flags = "-D -c ${unicorn_conf}"
       $unicorn_workers = '8'
       $unicorn_socket = "${run_dir}/puppetmaster_unicorn.sock"
       $unicorn_pid = "${run_dir}/puppetmaster_unicorn.pid"
