@@ -15,13 +15,16 @@ $unicorn_pid,
 $unicorn_flags,
 $webserver_frontend,
 ) {
-  package { $unicorn_package:
-    ensure => 'installed',
-  }
 
   if $ensure == 'running' {
     $files_ensure = 'file'
+    package { $unicorn_package:
+      ensure => 'installed',
+      before => File[$unicorn_conf],
+    }
   } else {
+    # Not uninstalling the unicorn package,
+    # because others might still need/use it
     $files_ensure = 'absent'
   }
 
@@ -47,7 +50,6 @@ $webserver_frontend,
     flags  => $unicorn_flags,
   }
 
-  Package[$unicorn_package] ->
   File[$unicorn_conf] ~>
   File['/etc/rc.d/puppetmaster_unicorn'] ~>
   Service['puppetmaster_unicorn']
