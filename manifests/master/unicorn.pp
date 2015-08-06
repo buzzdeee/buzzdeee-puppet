@@ -29,8 +29,9 @@ $webserver_frontend,
     ensure  => $files_ensure,
     owner   => 'root',
     group   => '0',
-    mode    => '0444',
+    mode    => '0555',
     content => template('puppet/puppetmaster_unicorn.erb'),
+    before  => Service['puppetmaster_unicorn'],
   }
 
   file { $unicorn_conf:
