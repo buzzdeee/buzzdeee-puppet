@@ -1,1 +1,1 @@
-class { 'puppet': }
+class { '::puppet': }
