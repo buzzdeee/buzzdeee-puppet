@@ -31,13 +31,13 @@ class puppet (
     }
     case $master {
       'webrick': {
-        class { 'puppet::master::webrick':
+        class { '::puppet::master::webrick':
           ensure               => 'running',
           enable               => true,
           master_service_name  => $master_service_name,
           master_service_flags => $master_service_flags,
         }
-        class { 'puppet::master::unicorn':
+        class { '::puppet::master::unicorn':
           ensure             => 'stopped',
           enable             => false,
           rubyversion        => $rubyversion,
@@ -52,21 +52,21 @@ class puppet (
           webserver_frontend => $webserver_frontend,
           before             => Class['puppet::master::webrick'],
         }
-        class { 'puppet::master::passenger':
+        class { '::puppet::master::passenger':
           ensure => 'stopped',
           enable => false,
           before => Class['puppet::master::unicorn'],
         }
       }
       'unicorn': {
-        class { 'puppet::master::webrick':
+        class { '::puppet::master::webrick':
           ensure               => 'stopped',
           enable               => false,
           master_service_name  => $master_service_name,
           master_service_flags => $master_service_flags,
           before               => Class['puppet::master::unicorn'],
         }
-        class { 'puppet::master::unicorn':
+        class { '::puppet::master::unicorn':
           ensure             => 'running',
           enable             => true,
           rubyversion        => $rubyversion,
@@ -80,21 +80,21 @@ class puppet (
           unicorn_flags      => $unicorn_flags,
           webserver_frontend => $webserver_frontend,
         }
-        class { 'puppet::master::passenger':
+        class { '::puppet::master::passenger':
           ensure => 'stopped',
           enable => false,
           before => Class['puppet::master::unicorn'],
         }
       }
       'passenger': {
-        class { 'puppet::master::webrick':
+        class { '::puppet::master::webrick':
           ensure               => 'stopped',
           enable               => false,
           master_service_name  => $master_service_name,
           master_service_flags => $master_service_flags,
           before               => Class['puppet::master::passenger'],
         }
-        class { 'puppet::master::unicorn':
+        class { '::puppet::master::unicorn':
           ensure             => 'stopped',
           enable             => false,
           rubyversion        => $rubyversion,
@@ -109,7 +109,7 @@ class puppet (
           webserver_frontend => $webserver_frontend,
           before             => Class['puppet::master::passenger'],
         }
-        class { 'puppet::master::passenger':
+        class { '::puppet::master::passenger':
           ensure => 'running',
           enable => true,
         }
@@ -120,13 +120,13 @@ class puppet (
       }
     }
   } else {
-    class { 'puppet::master::webrick':
+    class { '::puppet::master::webrick':
       ensure               => 'stopped',
       enable               => false,
       master_service_name  => $master_service_name,
       master_service_flags => $master_service_flags,
     }
-    class { 'puppet::master::unicorn':
+    class { '::puppet::master::unicorn':
       ensure             => 'stopped',
       enable             => false,
       rubyversion        => $rubyversion,
@@ -140,20 +140,20 @@ class puppet (
       unicorn_flags      => $unicorn_flags,
       webserver_frontend => $webserver_frontend,
     }
-    class { 'puppet::master::passenger':
+    class { '::puppet::master::passenger':
       ensure => 'stopped',
       enable => false,
     }
   }
 
-  class { 'puppet::install':
+  class { '::puppet::install':
     package_name                 => $package_name,
     package_ensure               => $package_ensure,
     msgpack_package_name         => $msgpack_package_name,
     enable_msgpack_serialization => $enable_msgpack_serialization,
   }
 
-  class { 'puppet::config':
+  class { '::puppet::config':
     enable_msgpack_serialization   => $enable_msgpack_serialization,
     preferred_serialization_format => $preferred_serialization_format,
     configtimeout                  => $configtimeout,
@@ -162,7 +162,7 @@ class puppet (
   }
 
   if $service_name {
-    class { 'puppet::service':
+    class { '::puppet::service':
       service_name     => $service_name,
       service_ensure   => $service_ensure,
       service_enable   => $service_enable,
