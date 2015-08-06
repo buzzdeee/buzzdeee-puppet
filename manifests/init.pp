@@ -20,7 +20,7 @@ class puppet (
   $package_name   = $puppet::params::package_name,
   $msgpack_package_name = $puppet::params::msgpack_package_name,
   $rubyversion = $puppet::params::rubyversion,
-  $unicorn_flags = $puppet::params::unicornflags,
+  $unicorn_flags = $puppet::params::unicorn_flags,
   $unicorn_workers = $puppet::params::unicorn_workers,
   $webserver_frontend = $puppet::params::webserverfrontend,
 ) inherits puppet::params {
