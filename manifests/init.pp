@@ -158,7 +158,7 @@ class puppet (
     preferred_serialization_format => $preferred_serialization_format,
     configtimeout                  => $configtimeout,
     server                         => $server,
-    config_defaultsfile            => $config_defaultsfile
+    config_defaultsfile            => $config_defaultsfile,
   }
 
   if $service_name {
