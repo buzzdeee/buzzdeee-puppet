@@ -1,3 +1,6 @@
+# private class, do not use directly.
+# takes care of puppet master configuration,
+# when puppet is using its internal webrick server.
 class puppet::master::webrick (
 $ensure,
 $enable,

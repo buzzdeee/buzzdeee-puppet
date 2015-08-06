@@ -9,11 +9,11 @@ class puppet::params {
     'OpenBSD': {
       if (versioncmp( $::kernelversion, '5.8' ) < 0) {
         $service_name = 'puppetd'
-	$master_service_name = 'puppetmasterd'
+  $master_service_name = 'puppetmasterd'
         $rubyversion = '21'
       } else {
         $service_name = 'puppet'
-	$master_service_name = 'puppetmaster'
+  $master_service_name = 'puppetmaster'
         $rubyversion = '22'
       }
       $service_provider = undef
@@ -52,7 +52,7 @@ class puppet::params {
 
   $service_ensure = 'running'
   $service_enable = true
-  $master = undef	# can be: webrick, unicorn, passenger
+  $master = undef  # can be: webrick, unicorn, passenger
   $webserver_frontend = undef       # can be: nginx, apache2
   $client_service_flags = undef
   $enable_msgpack_serialization = undef

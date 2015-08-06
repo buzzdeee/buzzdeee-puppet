@@ -27,17 +27,17 @@ class puppet (
 
   if $master {
     if $::operatingsystem != 'OpenBSD' {
-      fail("${modulename}: managing a Puppet master is not supported on ${::operatingsystem}")
+      fail("${::modulename}: managing a Puppet master is not supported on ${::operatingsystem}")
     }
     case $master {
       'webrick': {
-        class { 'puppet::master::webrick': 
+        class { 'puppet::master::webrick':
           ensure               => 'running',
           enable               => true,
           master_service_name  => $master_service_name,
           master_service_flags => $master_service_flags,
         }
-        class { 'puppet::master::unicorn': 
+        class { 'puppet::master::unicorn':
           ensure             => 'stopped',
           enable             => false,
           rubyversion        => $rubyversion,
@@ -50,23 +50,23 @@ class puppet (
           unicorn_pid        => $puppet::params::unicorn_pid,
           unicorn_flags      => $unicorn_flags,
           webserver_frontend => $webserver_frontend,
-	  before             => Class['puppet::master::webrick'],
+          before             => Class['puppet::master::webrick'],
         }
         class { 'puppet::master::passenger':
           ensure => 'stopped',
           enable => false,
-	  before => Class['puppet::master::unicorn'],
+          before => Class['puppet::master::unicorn'],
         }
       }
       'unicorn': {
-        class { 'puppet::master::webrick': 
+        class { 'puppet::master::webrick':
           ensure               => 'stopped',
           enable               => false,
           master_service_name  => $master_service_name,
           master_service_flags => $master_service_flags,
-	  before               => Class['puppet::master::unicorn'],
+          before               => Class['puppet::master::unicorn'],
         }
-        class { 'puppet::master::unicorn': 
+        class { 'puppet::master::unicorn':
           ensure             => 'running',
           enable             => true,
           rubyversion        => $rubyversion,
@@ -83,18 +83,18 @@ class puppet (
         class { 'puppet::master::passenger':
           ensure => 'stopped',
           enable => false,
-	  before => Class['puppet::master::unicorn'],
+          before => Class['puppet::master::unicorn'],
         }
       }
       'passenger': {
-        class { 'puppet::master::webrick': 
+        class { 'puppet::master::webrick':
           ensure               => 'stopped',
           enable               => false,
           master_service_name  => $master_service_name,
           master_service_flags => $master_service_flags,
-	  before               => Class['puppet::master::passenger'],
+          before               => Class['puppet::master::passenger'],
         }
-        class { 'puppet::master::unicorn': 
+        class { 'puppet::master::unicorn':
           ensure             => 'stopped',
           enable             => false,
           rubyversion        => $rubyversion,
@@ -107,7 +107,7 @@ class puppet (
           unicorn_pid        => $puppet::params::unicorn_pid,
           unicorn_flags      => $unicorn_flags,
           webserver_frontend => $webserver_frontend,
-	  before             => Class['puppet::master::passenger'],
+          before             => Class['puppet::master::passenger'],
         }
         class { 'puppet::master::passenger':
           ensure => 'running',
@@ -129,10 +129,14 @@ class puppet (
     class { 'puppet::master::unicorn':
       ensure             => 'stopped',
       enable             => false,
+      rubyversion        => $rubyversion,
+      rubyunicorn        => $puppet::params::rubyunicorn,
       unicorn_workers    => $unicorn_workers,
+      unicorn_package    => $puppet::params::unicorn_package,
       config_dir         => $config_dir,
-      unicorn_socket     => $unicorn_socket,
-      unicorn_pid        => $unicorn_pid,
+      unicorn_conf       => $puppet::params::unicorn_conf,
+      unicorn_socket     => $puppet::params::unicorn_socket,
+      unicorn_pid        => $puppet::params::unicorn_pid,
       unicorn_flags      => $unicorn_flags,
       webserver_frontend => $webserver_frontend,
     }

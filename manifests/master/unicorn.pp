@@ -1,3 +1,6 @@
+# private class, do not use directly
+# takes care of puppet master configuration, in case
+# its behind a unicorn
 class puppet::master::unicorn (
 $ensure,
 $enable,
@@ -44,7 +47,7 @@ $webserver_frontend,
     flags  => $unicorn_flags,
   }
 
-  Package[$unicorn_package] -> 
+  Package[$unicorn_package] ->
   File['/etc/rc.d/puppetmaster_unicorn'] ~>
   Service['puppetmaster_unicorn']
 
