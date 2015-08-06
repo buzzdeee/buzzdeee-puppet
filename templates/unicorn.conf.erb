@@ -1,3 +1,4 @@
+# This file is managed via Puppet
 worker_processes <%= @unicorn_workers %>
 working_directory "<%= @config_dir %>"
 listen '<%= @unicorn_socket %>', :backlog => 512
