@@ -51,7 +51,8 @@ class puppet::params {
 
   $service_ensure = 'running'
   $service_enable = true
-  $master = undef	# can be: standalone, unicorn, passenger
+  $master = undef	# can be: webrick, unicorn, passenger
+  $webserver_frontend = undef       # can be: nginx, apache2
   $client_service_flags = undef
   $enable_msgpack_serialization = undef
   $preferred_serialization_format = msgpack

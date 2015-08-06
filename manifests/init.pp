@@ -20,47 +20,111 @@ class puppet (
   $msgpack_package_name = $puppet::params::msgpack_package_name,
   $rubyversion = $puppet::params::rubyversion,
   $unicornflags = $puppet::params::unicornflags,
+  $webserver_frontend = $puppet::params::webserverfrontend,
 ) inherits puppet::params {
 
   if $master {
+    if $::operatingsystem != 'OpenBSD' {
+      fail("${modulename}: managing a Puppet master is not supported on ${::operatingsystem}")
+    }
     case $master {
-      'standalone': {
-        class { 'puppet::master::standalone': 
+      'webrick': {
+        class { 'puppet::master::webrick': 
           ensure               => 'running',
           enable               => true,
           master_service_name  => $master_service_name,
           master_service_flags => $master_service_flags,
         }
+        class { 'puppet::master::unicorn': 
+          ensure             => 'stopped',
+          enable             => false,
+          unicorn_workers    => $unicorn_workers,
+          config_dir         => $config_dir,
+          unicorn_socket     => $unicorn_socket,
+          unicorn_pid        => $unicorn_pid,
+          unicorn_flags      => $unicorn_flags,
+          webserver_frontend => $webserver_frontend,
+	  before             => Class['puppet::master::webrick'],
+        }
+        class { 'puppet::master::passenger':
+          ensure => 'stopped',
+          enable => false,
+	  before => Class['puppet::master::unicorn'],
+        }
       }
       'unicorn': {
-        class { 'puppet::master::standalone': 
+        class { 'puppet::master::webrick': 
           ensure               => 'stopped',
           enable               => false,
           master_service_name  => $master_service_name,
           master_service_flags => $master_service_flags,
+	  before               => Class['puppet::master::unicorn'],
         }
         class { 'puppet::master::unicorn': 
-          ensure          => 'running',
-          enable          => true,
-          unicorn_workers => $unicorn_workers,
-          config_dir      => $config_dir,
-          unicorn_socket  => $unicorn_socket,
-          unicorn_pid     => $unicorn_pid,
-          unicorn_flags   => $unicorn_flags,
+          ensure             => 'running',
+          enable             => true,
+          unicorn_workers    => $unicorn_workers,
+          config_dir         => $config_dir,
+          unicorn_socket     => $unicorn_socket,
+          unicorn_pid        => $unicorn_pid,
+          unicorn_flags      => $unicorn_flags,
+          webserver_frontend => $webserver_frontend,
+        }
+        class { 'puppet::master::passenger':
+          ensure => 'stopped',
+          enable => false,
+	  before => Class['puppet::master::unicorn'],
         }
       }
       'passenger': {
-        class { 'puppet::master::standalone': 
+        class { 'puppet::master::webrick': 
           ensure               => 'stopped',
           enable               => false,
           master_service_name  => $master_service_name,
           master_service_flags => $master_service_flags,
+	  before               => Class['puppet::master::passenger'],
+        }
+        class { 'puppet::master::unicorn': 
+          ensure             => 'stopped',
+          enable             => false,
+          unicorn_workers    => $unicorn_workers,
+          config_dir         => $config_dir,
+          unicorn_socket     => $unicorn_socket,
+          unicorn_pid        => $unicorn_pid,
+          unicorn_flags      => $unicorn_flags,
+          webserver_frontend => $webserver_frontend,
+	  before             => Class['puppet::master::passenger'],
+        }
+        class { 'puppet::master::passenger':
+          ensure => 'running',
+          enable => true,
         }
 
       }
       default: {
-        fail("${::modulename}: master must be one of 'standalone', 'unicorn', or 'passenger'")
+        fail("${::modulename}: master must be one of 'webrick', 'unicorn', or 'passenger'")
       }
+    }
+  } else {
+    class { 'puppet::master::webrick':
+      ensure               => 'stopped',
+      enable               => false,
+      master_service_name  => $master_service_name,
+      master_service_flags => $master_service_flags,
+    }
+    class { 'puppet::master::unicorn':
+      ensure             => 'stopped',
+      enable             => false,
+      unicorn_workers    => $unicorn_workers,
+      config_dir         => $config_dir,
+      unicorn_socket     => $unicorn_socket,
+      unicorn_pid        => $unicorn_pid,
+      unicorn_flags      => $unicorn_flags,
+      webserver_frontend => $webserver_frontend,
+    }
+    class { 'puppet::master::passenger':
+      ensure => 'stopped',
+      enable => false,
     }
   }
 
