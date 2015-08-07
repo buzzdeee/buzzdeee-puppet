@@ -16,7 +16,6 @@ $unicorn_socket,
     ssl_cert             => "/etc/puppet/ssl/certs/${::fqdn}.pem",
     ssl_key              => "/etc/puppet/ssl/private_keys/${::fqdn}.pem",
     server_name          => [ 'puppet', "puppet.${::fqdn}", ],
-    use_default_location => false,
     access_log           => '/var/www/logs/puppet_access.log',
     error_log            => '/var/www/logs/puppet_error.log',
     vhost_cfg_append   => {
