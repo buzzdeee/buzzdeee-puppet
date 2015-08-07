@@ -57,10 +57,15 @@ $webserver_frontend,
     content => template('puppet/unicorn.conf.erb'),
   }
 
+  # The unicorn_flags are passed into the rc script directly,
+  # no reason to pass them in to the service again.
+  # further that breaks in the case of $ensure != running, since
+  # the service tries to set the flags, but the rc script won't
+  # be available, and then the catalog apply error at that point
+  # on every run :(
   service { 'puppetmaster_unicorn':
     ensure => $ensure,
     enable => $enable,
-    flags  => $unicorn_flags,
   }
 
   File[$unicorn_conf] ~>
