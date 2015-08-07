@@ -15,6 +15,7 @@ $unicorn_socket,
     ssl_port           => '8140',
     ssl_cert           => "/etc/puppet/ssl/certs/${::fqdn}.pem",
     ssl_key            => "/etc/puppet/ssl/private_keys/${::fqdn}.pem",
+    server_name        => [ 'puppet', "puppet.${::fqdn}", ],
     vhost_cfg_append   => {
       ssl_crl                => '/etc/puppet/ssl/ca/ca_crl.pem',
       ssl_client_certificate => '/etc/puppet/ssl/certs/ca.pem',
@@ -24,7 +25,6 @@ $unicorn_socket,
       use_default_location   => false,
       access_log             => '/var/www/logs/puppet_access.log',
       error_log              => '/var/www/logs/puppet_error.log',
-      server_name            => [ 'puppet', "puppet.${::fqdn}", ],
     },
     proxy              => 'puppetmaster_unicorn',
     proxy_read_timeout => '120',
@@ -38,7 +38,7 @@ $unicorn_socket,
 
   ::nginx::resource::upstream { 'puppetmaster_unicorn':
     ensure                => $ensure,
-    members               => [ "server unix:${unicorn_socket}", ],
+    members               => [ "unix:${unicorn_socket}", ],
     upstream_fail_timeout => '0',
   }
 
