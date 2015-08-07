@@ -27,7 +27,7 @@ class puppet (
 
   if $master {
     if $::operatingsystem != 'OpenBSD' {
-      fail("${::modulename}: managing a Puppet master is not supported on ${::operatingsystem}")
+      fail("${::module_name}: managing a Puppet master is not supported on ${::operatingsystem}")
     }
     case $master {
       'webrick': {
@@ -113,10 +113,9 @@ class puppet (
           ensure => 'running',
           enable => true,
         }
-
       }
       default: {
-        fail("${::modulename}: master must be one of 'webrick', 'unicorn', or 'passenger'")
+        fail("${::module_name}: master must be one of 'webrick', 'unicorn', or 'passenger'")
       }
     }
   } else {

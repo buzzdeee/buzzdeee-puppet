@@ -30,13 +30,15 @@ $webserver_frontend,
     $webserver_frontend_ensure = 'absent'
   }
 
-  case $webserver_frontend {
-    'nginx': { class { '::puppet::master::unicorn::nginx':
+  if $webserver_frontend {
+    case $webserver_frontend {
+      'nginx': { class { '::puppet::master::unicorn::nginx':
                   ensure         => $webserver_frontend_ensure,
                   unicorn_socket => $unicorn_socket,
                 }
+      }
+      default: { fail("${::module_name}: webserver_frontend ${webserver_frontend} not supported with unicorn") }
     }
-    default: { fail("${::modulename}: webserver_frontend ${webserver_frontend} not supported with unicorn") }
   }
 
   file { '/etc/rc.d/puppetmaster_unicorn':

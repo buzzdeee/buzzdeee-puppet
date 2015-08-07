@@ -5,7 +5,9 @@ $ensure,
 $unicorn_socket,
 ) {
 
-  include ::nginx
+  if $ensure == 'present' {
+    include ::nginx
+  }
 
   ::nginx::resource::vhost { 'puppet':
     ensure             => $ensure,

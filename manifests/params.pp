@@ -40,13 +40,13 @@ class puppet::params {
           $config_defaultsfile = undef
         }
         default: {
-          fail("${::modulename}: unsupported platform: ${::osfamily}/${::operatingsystem}")
+          fail("${::module_name}: unsupported platform: ${::osfamily}/${::operatingsystem}")
         }
       }
       $msgpack_package_name = undef
     }
     default: {
-      fail("${::modulename}: unsupported platform: ${::osfamily}")
+      fail("${::module_name}: unsupported platform: ${::osfamily}")
     }
   }
 
