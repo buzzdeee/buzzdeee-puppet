@@ -11,11 +11,11 @@ matrix:
     env: PUPPET_GEM_VERSION="~> 3.0" FACTER_GEM_VERSION="~> 1.7.0"
   - rvm: 1.9.3
     env: PUPPET_GEM_VERSION="~> 3.0"
-  - rvm: 2.2.2
+  - rvm: 2.1.0
     env: PUPPET_GEM_VERSION="~> 3.8.2"
-  - rvm: 2.2.2
+  - rvm: 2.1.0
     env: PUPPET_GEM_VERSION="~> 3.8.2" FUTURE_PARSER="yes"
-  - rvm: 2.2.2
+  - rvm: 2.1.0
     env: PUPPET_GEM_VERSION="~> 4.0"
 notifications:
   email: true
@@ -29,4 +29,4 @@ notifications:
 #    # all_branches is required to use tags
 #    all_branches: true
 #    # Only publish if our main Ruby target builds
-#    rvm: 2.2.0
+#    rvm: 2.1.0
