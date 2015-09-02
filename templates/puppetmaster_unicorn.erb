@@ -1,0 +1,13 @@
+#!/bin/sh
+#
+# This file is managed via Puppet
+
+daemon="<%= @rubyunicorn %>"
+daemon_flags="<%= @unicorn_flags %>"
+
+. /etc/rc.d/rc.subr
+
+pexp="ruby<%= @rubyversion %>: unicorn<%= @rubyversion %> master ${daemon_flags:+${daemon_flags}}+(ruby<%= @rubyversion %>)*"
+rc_reload=NO
+
+rc_cmd $1
