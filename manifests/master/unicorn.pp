@@ -72,7 +72,10 @@ $webserver_frontend,
 
   if $unicorn_conf {
     File[$unicorn_conf] ~>
+    File['/etc/rc.d/puppetmaster_unicorn'] ~>
+    Service['puppetmaster_unicorn']
+  } else {
+    File['/etc/rc.d/puppetmaster_unicorn'] ~>
+    Service['puppetmaster_unicorn']
   }
-  File['/etc/rc.d/puppetmaster_unicorn'] ~>
-  Service['puppetmaster_unicorn']
 }
