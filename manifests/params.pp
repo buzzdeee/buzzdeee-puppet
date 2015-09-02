@@ -7,7 +7,7 @@ class puppet::params {
 
   case $::osfamily {
     'OpenBSD': {
-      if (versioncmp( $::kernelversion, '5.8' ) < 0) {
+      if (versioncmp( $::kernelversion, '5.7' ) < 0) {
         $service_name = 'puppetd'
   $master_service_name = 'puppetmasterd'
         $rubyversion = '21'
