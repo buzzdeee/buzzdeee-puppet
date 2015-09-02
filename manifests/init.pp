@@ -157,6 +157,7 @@ class puppet (
     enable_msgpack_serialization   => $enable_msgpack_serialization,
     preferred_serialization_format => $preferred_serialization_format,
     configtimeout                  => $configtimeout,
+    runinterval                    => $runinterval,
     server                         => $server,
     config_defaultsfile            => $config_defaultsfile,
   }
