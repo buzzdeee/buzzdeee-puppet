@@ -9,11 +9,11 @@ class puppet::params {
     'OpenBSD': {
       if (versioncmp( $::kernelversion, '5.7' ) < 0) {
         $service_name = 'puppetd'
-  $master_service_name = 'puppetmasterd'
+        $master_service_name = 'puppetmasterd'
         $rubyversion = '21'
       } else {
         $service_name = 'puppet'
-  $master_service_name = 'puppetmaster'
+        $master_service_name = 'puppetmaster'
         $rubyversion = '22'
       }
       $service_provider = undef
@@ -32,11 +32,13 @@ class puppet::params {
         'SLES': {
           $service_name = 'puppet'
           $service_provider = undef
+          $master_service_name = 'puppetmaster'
           $config_defaultsfile = '/etc/sysconfig/puppet'
         }
         'OpenSuSE': {
           $service_name = 'puppet.service'
           $service_provider = 'systemd'
+          $master_service_name = 'puppetmaster'
           $config_defaultsfile = undef
         }
         default: {

@@ -26,7 +26,7 @@ class puppet (
   $webserver_frontend = $puppet::params::webserverfrontend,
 ) inherits puppet::params {
 
-  if $master {
+  if $master != false {
     if $::operatingsystem != 'OpenBSD' {
       fail("${::module_name}: managing a Puppet master is not supported on ${::operatingsystem}")
     }
