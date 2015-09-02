@@ -70,7 +70,9 @@ $webserver_frontend,
     enable => $enable,
   }
 
-  File[$unicorn_conf] ~>
+  if $unicorn_conf {
+    File[$unicorn_conf] ~>
+  }
   File['/etc/rc.d/puppetmaster_unicorn'] ~>
   Service['puppetmaster_unicorn']
 }
