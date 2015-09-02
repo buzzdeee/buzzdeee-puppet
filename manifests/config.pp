@@ -3,6 +3,7 @@
 
 class puppet::config (
   $preferred_serialization_format,
+  $runinterval,
   $configtimeout,
   $server,
   $enable_msgpack_serialization,
@@ -16,6 +17,16 @@ class puppet::config (
       section => 'agent',
       setting => 'configtimeout',
       value   => $configtimeout,
+    }
+  }
+
+  if $runinterval {
+    ini_setting { 'agent_runinterval':
+      ensure  => 'present',
+      path    => '/etc/puppet/puppet.conf',
+      section => 'agent',
+      setting => 'runinterval',
+      value   => $runinterval,
     }
   }
 

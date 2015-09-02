@@ -5,6 +5,7 @@ class puppet (
   $run_dir = $puppet::params::run_dir,
   $master = $puppet::params::master,
   $configtimeout = $puppet::params::configtimeout,
+  $runinterval = $puppet::params::runinterval,
   $server = $puppet::params::server,
   $client_service_flags = $puppet::params::client_service_flags,
   $enable_msgpack_serialization = $puppet::params::enable_msgpack_serialization,

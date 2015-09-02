@@ -57,6 +57,7 @@ class puppet::params {
   $client_service_flags = undef
   $enable_msgpack_serialization = undef
   $preferred_serialization_format = msgpack
+  $runinterval = '1800'
   $configtimeout = '10m'
   $server = undef
   $package_ensure = 'installed'
