@@ -49,12 +49,14 @@ $webserver_frontend,
     content => template('puppet/puppetmaster_unicorn.erb'),
   }
 
-  file { $unicorn_conf:
-    ensure  => $files_ensure,
-    owner   => 'root',
-    group   => '0',
-    mode    => '0444',
-    content => template('puppet/unicorn.conf.erb'),
+  if $unicorn_conf {
+    file { $unicorn_conf:
+      ensure  => $files_ensure,
+      owner   => 'root',
+      group   => '0',
+      mode    => '0444',
+      content => template('puppet/unicorn.conf.erb'),
+    }
   }
 
   # The unicorn_flags are passed into the rc script directly,
