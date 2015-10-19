@@ -8,6 +8,7 @@ class puppet::config (
   $server,
   $enable_msgpack_serialization,
   $config_defaultsfile,
+  $puppet_env,
 ) {
 
   if $configtimeout {
@@ -47,6 +48,16 @@ class puppet::config (
       section => 'main',
       setting => 'preferred_serialization_format',
       value   => $preferred_serialization_format,
+    }
+  }
+
+  if $puppet_env {
+    ini_setting { 'main_environment':
+      ensure  => 'present',
+      path    => '/etc/puppet/puppet.conf',
+      section => 'main',
+      setting => 'environment',
+      value   => $puppet_env,
     }
   }
 

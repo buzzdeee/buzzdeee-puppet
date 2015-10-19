@@ -61,7 +61,8 @@ class puppet::params {
   $preferred_serialization_format = msgpack
   $runinterval = '1800'
   $configtimeout = '10m'
-  $server = undef
+  $puppet_env = undef		# use the default 'production' environment
+  $server = undef		# use the default 'puppet'
   $package_ensure = 'installed'
   $package_name = 'puppet'
 }
