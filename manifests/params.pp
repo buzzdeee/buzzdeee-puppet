@@ -62,6 +62,7 @@ class puppet::params {
   $runinterval = '1800'
   $configtimeout = '10m'
   $puppet_env = undef           # use the default 'production' environment
+  $autosign = undef             # manage CA autosigning, true, false or path to autosign.conf file
   $server = undef               # use the default 'puppet'
   $package_ensure = 'installed'
   $package_name = 'puppet'

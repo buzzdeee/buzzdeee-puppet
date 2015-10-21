@@ -6,6 +6,7 @@ class puppet (
   $master                         = $puppet::params::master,
   $configtimeout                  = $puppet::params::configtimeout,
   $runinterval                    = $puppet::params::runinterval,
+  $autosign                       = $puppet::params::autosign,
   $server                         = $puppet::params::server,
   $puppet_env                     = $puppet::params::puppet_env,
   $client_service_flags           = $puppet::params::client_service_flags,
@@ -155,6 +156,7 @@ class puppet (
   }
 
   class { '::puppet::config':
+    autosign                       => $autosign,
     enable_msgpack_serialization   => $enable_msgpack_serialization,
     preferred_serialization_format => $preferred_serialization_format,
     configtimeout                  => $configtimeout,

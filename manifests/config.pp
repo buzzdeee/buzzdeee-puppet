@@ -2,12 +2,13 @@
 # takes care about the Puppet configuration
 
 class puppet::config (
+  $autosign,
+  $config_defaultsfile,
+  $enable_msgpack_serialization,
   $preferred_serialization_format,
   $runinterval,
   $configtimeout,
   $server,
-  $enable_msgpack_serialization,
-  $config_defaultsfile,
   $puppet_env,
 ) {
 
@@ -38,6 +39,16 @@ class puppet::config (
       section => 'agent',
       setting => 'server',
       value   => $server,
+    }
+  }
+
+  if $autosign {
+    ini_setting { 'main_autosign':
+      ensure  => 'present',
+      path    => '/etc/puppet/puppet.conf',
+      section => 'main',
+      setting => 'autosign',
+      value   => $autosign,
     }
   }
 
