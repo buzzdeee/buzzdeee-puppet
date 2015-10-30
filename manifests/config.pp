@@ -54,7 +54,7 @@ class puppet::config (
   }
 
   if $parser {
-    ini_setting { 'main_autosign':
+    ini_setting { 'main_parser':
       ensure  => 'present',
       path    => '/etc/puppet/puppet.conf',
       section => 'main',
