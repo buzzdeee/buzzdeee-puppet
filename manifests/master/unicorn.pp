@@ -14,6 +14,8 @@ $unicorn_socket,
 $unicorn_pid,
 $unicorn_flags,
 $webserver_frontend,
+$puppet_user,
+$puppet_group,
 ) {
 
   if $ensure == 'running' {
@@ -57,6 +59,14 @@ $webserver_frontend,
       mode    => '0444',
       content => template('puppet/unicorn.conf.erb'),
     }
+  }
+
+  class { 'puppet::master::rack':
+    before => Service['puppetmaster_unicorn'],
+    ensure => $files_ensure,
+    user   => $puppet_user,
+    group  => $puppet_group,
+    file   => "${config_dir}/config.ru",
   }
 
   # The unicorn_flags are passed into the rc script directly,

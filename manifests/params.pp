@@ -16,6 +16,8 @@ class puppet::params {
         $master_service_name = 'puppetmaster'
         $rubyversion = '22'
       }
+      $puppet_user = '_puppet'
+      $puppet_group = '_puppet'
       $service_provider = undef
       $msgpack_package_name = "ruby${rubyversion}-msgpack"
       $config_defaultsfile = undef
@@ -45,6 +47,8 @@ class puppet::params {
           fail("${::module_name}: unsupported platform: ${::osfamily}/${::operatingsystem}")
         }
       }
+      $puppet_user = 'puppet'
+      $puppet_group = 'puppet'
       $msgpack_package_name = undef
     }
     default: {

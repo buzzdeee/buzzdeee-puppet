@@ -26,6 +26,8 @@ class puppet (
   $unicorn_flags                  = $puppet::params::unicorn_flags,
   $unicorn_workers                = $puppet::params::unicorn_workers,
   $webserver_frontend             = $puppet::params::webserverfrontend,
+  $puppet_user                    = $puppet::params::puppet_user,
+  $puppet_group                   = $puppet::params::puppet_group,
 ) inherits puppet::params {
 
   if $master != false {
@@ -53,6 +55,8 @@ class puppet (
           unicorn_pid        => $puppet::params::unicorn_pid,
           unicorn_flags      => $unicorn_flags,
           webserver_frontend => $webserver_frontend,
+          puppet_user        => $puppet_user,
+          puppet_group       => $puppet_group,
           before             => Class['puppet::master::webrick'],
         }
         class { '::puppet::master::passenger':
@@ -81,6 +85,8 @@ class puppet (
           unicorn_socket     => $puppet::params::unicorn_socket,
           unicorn_pid        => $puppet::params::unicorn_pid,
           unicorn_flags      => $unicorn_flags,
+          puppet_user        => $puppet_user,
+          puppet_group       => $puppet_group,
           webserver_frontend => $webserver_frontend,
         }
         class { '::puppet::master::passenger':
@@ -109,6 +115,8 @@ class puppet (
           unicorn_socket     => $puppet::params::unicorn_socket,
           unicorn_pid        => $puppet::params::unicorn_pid,
           unicorn_flags      => $unicorn_flags,
+          puppet_user        => $puppet_user,
+          puppet_group       => $puppet_group,
           webserver_frontend => $webserver_frontend,
           before             => Class['puppet::master::passenger'],
         }
@@ -140,6 +148,8 @@ class puppet (
       unicorn_socket     => $puppet::params::unicorn_socket,
       unicorn_pid        => $puppet::params::unicorn_pid,
       unicorn_flags      => $unicorn_flags,
+      puppet_user        => $puppet_user,
+      puppet_group       => $puppet_group,
       webserver_frontend => $webserver_frontend,
     }
     class { '::puppet::master::passenger':
