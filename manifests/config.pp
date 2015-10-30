@@ -3,6 +3,7 @@
 
 class puppet::config (
   $autosign,
+  $parser,
   $config_defaultsfile,
   $enable_msgpack_serialization,
   $preferred_serialization_format,
@@ -49,6 +50,16 @@ class puppet::config (
       section => 'main',
       setting => 'autosign',
       value   => $autosign,
+    }
+  }
+
+  if $parser {
+    ini_setting { 'main_autosign':
+      ensure  => 'present',
+      path    => '/etc/puppet/puppet.conf',
+      section => 'main',
+      setting => 'parser',
+      value   => $parser,
     }
   }
 

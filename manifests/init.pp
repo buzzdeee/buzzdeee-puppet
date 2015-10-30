@@ -9,6 +9,7 @@ class puppet (
   $autosign                       = $puppet::params::autosign,
   $server                         = $puppet::params::server,
   $puppet_env                     = $puppet::params::puppet_env,
+  $parser                         = $puppet::params::parser,
   $client_service_flags           = $puppet::params::client_service_flags,
   $enable_msgpack_serialization   = $puppet::params::enable_msgpack_serialization,
   $preferred_serialization_format = $puppet::params::preferred_serialization_format,
@@ -167,6 +168,7 @@ class puppet (
 
   class { '::puppet::config':
     autosign                       => $autosign,
+    parser                         => $parser,
     enable_msgpack_serialization   => $enable_msgpack_serialization,
     preferred_serialization_format => $preferred_serialization_format,
     configtimeout                  => $configtimeout,

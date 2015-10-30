@@ -63,6 +63,7 @@ class puppet::params {
   $client_service_flags = undef
   $enable_msgpack_serialization = undef
   $preferred_serialization_format = msgpack
+  $parser = undef                   # maybe 'future'
   $runinterval = '1800'
   $configtimeout = '10m'
   $puppet_env = undef           # use the default 'production' environment
