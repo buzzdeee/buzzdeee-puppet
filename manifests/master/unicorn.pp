@@ -62,11 +62,11 @@ $puppet_group,
   }
 
   class { 'puppet::master::rack':
-    before => Service['puppetmaster_unicorn'],
     ensure => $files_ensure,
     user   => $puppet_user,
     group  => $puppet_group,
     file   => "${config_dir}/config.ru",
+    before => Service['puppetmaster_unicorn'],
   }
 
   # The unicorn_flags are passed into the rc script directly,
@@ -76,8 +76,9 @@ $puppet_group,
   # be available, and then the catalog apply error at that point
   # on every run :(
   service { 'puppetmaster_unicorn':
-    ensure => $ensure,
-    enable => $enable,
+    ensure    => $ensure,
+    enable    => $enable,
+    subscribe => Class['puppet::config'],
   }
 
   if $unicorn_conf {
@@ -87,5 +88,14 @@ $puppet_group,
   } else {
     File['/etc/rc.d/puppetmaster_unicorn'] ~>
     Service['puppetmaster_unicorn']
+  }
+
+  if $webserver_frontend {
+    case $webserver_frontend {
+      'nginx': {
+        Service['puppetmaster_unicorn'] ->
+        Service['nginx']
+      }
+    }
   }
 }

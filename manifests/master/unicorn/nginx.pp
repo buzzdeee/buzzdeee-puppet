@@ -5,6 +5,9 @@ $ensure,
 $unicorn_socket,
 ) {
 
+
+  require puppet::master::unicorn
+
   if $ensure == 'present' {
     include ::nginx
   }
