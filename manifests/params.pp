@@ -6,6 +6,11 @@ class puppet::params {
   $run_dir = '/var/puppet/run'
 
   case $::osfamily {
+    'Debian': {
+      $puppet_user = 'puppet'
+      $puppet_group = 'puppet'
+      $service_provider = undef
+    }
     'OpenBSD': {
       if (versioncmp( $::kernelversion, '5.7' ) < 0) {
         $service_name = 'puppetd'
@@ -15,6 +20,7 @@ class puppet::params {
         $service_name = 'puppet'
         $master_service_name = 'puppetmaster'
         $rubyversion = '22'
+        $msgpack_package_name = undef
       }
       $puppet_user = '_puppet'
       $puppet_group = '_puppet'
