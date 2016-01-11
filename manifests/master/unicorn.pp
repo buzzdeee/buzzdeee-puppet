@@ -43,39 +43,39 @@ $puppet_group,
     }
   }
 
-  file { '/etc/rc.d/puppetmaster_unicorn':
-    ensure  => $files_ensure,
-    owner   => 'root',
-    group   => '0',
-    mode    => '0555',
-    content => template('puppet/puppetmaster_unicorn.erb'),
-  }
-
-  if $unicorn_conf {
-    file { $unicorn_conf:
+  if $enable != false {
+    file { '/etc/rc.d/puppetmaster_unicorn':
       ensure  => $files_ensure,
       owner   => 'root',
       group   => '0',
-      mode    => '0444',
-      content => template('puppet/unicorn.conf.erb'),
+      mode    => '0555',
+      content => template('puppet/puppetmaster_unicorn.erb'),
     }
-  }
 
-  class { 'puppet::master::rack':
-    ensure => $files_ensure,
-    user   => $puppet_user,
-    group  => $puppet_group,
-    file   => "${config_dir}/config.ru",
-    before => Service['puppetmaster_unicorn'],
-  }
+    if $unicorn_conf {
+      file { $unicorn_conf:
+        ensure  => $files_ensure,
+        owner   => 'root',
+        group   => '0',
+        mode    => '0444',
+        content => template('puppet/unicorn.conf.erb'),
+      }
+    }
 
-  # The unicorn_flags are passed into the rc script directly,
-  # no reason to pass them in to the service again.
-  # further that breaks in the case of $ensure != running, since
-  # the service tries to set the flags, but the rc script won't
-  # be available, and then the catalog apply error at that point
-  # on every run :(
-  if $enable != false {
+    class { 'puppet::master::rack':
+      ensure => $files_ensure,
+      user   => $puppet_user,
+      group  => $puppet_group,
+      file   => "${config_dir}/config.ru",
+      before => Service['puppetmaster_unicorn'],
+    }
+
+    # The unicorn_flags are passed into the rc script directly,
+    # no reason to pass them in to the service again.
+    # further that breaks in the case of $ensure != running, since
+    # the service tries to set the flags, but the rc script won't
+    # be available, and then the catalog apply error at that point
+    # on every run :(
     service { 'puppetmaster_unicorn':
       ensure    => $ensure,
       enable    => $enable,
