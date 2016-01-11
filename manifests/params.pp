@@ -11,6 +11,7 @@ class puppet::params {
       $puppet_group = 'puppet'
       $master_service_name = 'puppetmaster'
       $service_provider = undef
+      $msgpack_package_name = undef
     }
     'OpenBSD': {
       if (versioncmp( $::kernelversion, '5.7' ) < 0) {
@@ -21,7 +22,6 @@ class puppet::params {
         $service_name = 'puppet'
         $master_service_name = 'puppetmaster'
         $rubyversion = '22'
-        $msgpack_package_name = undef
       }
       $puppet_user = '_puppet'
       $puppet_group = '_puppet'
