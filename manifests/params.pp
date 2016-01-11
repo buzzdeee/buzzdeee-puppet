@@ -9,6 +9,7 @@ class puppet::params {
     'Debian': {
       $puppet_user = 'puppet'
       $puppet_group = 'puppet'
+      $master_service_name = 'puppetmaster'
       $service_provider = undef
     }
     'OpenBSD': {
