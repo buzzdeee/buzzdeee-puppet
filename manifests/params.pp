@@ -10,6 +10,7 @@ class puppet::params {
       $puppet_user = 'puppet'
       $puppet_group = 'puppet'
       $master_service_name = 'puppetmaster'
+      $master_package = 'puppetmaster'
       $service_provider = undef
       $msgpack_package_name = undef
     }
@@ -26,6 +27,7 @@ class puppet::params {
       $puppet_user = '_puppet'
       $puppet_group = '_puppet'
       $service_provider = undef
+      $master_package = undef
       $msgpack_package_name = "ruby${rubyversion}-msgpack"
       $config_defaultsfile = undef
       $rubyunicorn = "/usr/local/bin/unicorn${rubyversion}"
@@ -54,6 +56,7 @@ class puppet::params {
           fail("${::module_name}: unsupported platform: ${::osfamily}/${::operatingsystem}")
         }
       }
+      $master_package = undef
       $puppet_user = 'puppet'
       $puppet_group = 'puppet'
       $msgpack_package_name = undef

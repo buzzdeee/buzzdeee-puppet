@@ -6,7 +6,14 @@ $ensure,
 $enable,
 $master_service_name,
 $master_service_flags,
+$master_package,
 ) {
+
+  if $master_package {
+    package { $master_package:
+
+    }
+  }
 
   service { $master_service_name:
     ensure    => $ensure,

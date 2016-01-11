@@ -17,6 +17,7 @@ class puppet (
   $service_name                   = $puppet::params::service_name,
   $master_service_name            = $puppet::params::master_service_name,
   $master_service_flags           = $puppet::params::master_service_flags,
+  $master_package                 = $puppet::params::master_package,
   $service_ensure                 = $puppet::params::service_ensure,
   $service_enable                 = $puppet::params::service_enable,
   $service_provider               = $puppet::params::service_provider,
@@ -42,6 +43,7 @@ class puppet (
           enable               => true,
           master_service_name  => $master_service_name,
           master_service_flags => $master_service_flags,
+          master_package       => $master_package,
         }
         class { '::puppet::master::unicorn':
           ensure             => 'stopped',
@@ -72,6 +74,7 @@ class puppet (
           enable               => false,
           master_service_name  => $master_service_name,
           master_service_flags => $master_service_flags,
+          master_package       => $master_package,
           before               => Class['puppet::master::unicorn'],
         }
         class { '::puppet::master::unicorn':
@@ -102,6 +105,7 @@ class puppet (
           enable               => false,
           master_service_name  => $master_service_name,
           master_service_flags => $master_service_flags,
+          master_package       => $master_package,
           before               => Class['puppet::master::passenger'],
         }
         class { '::puppet::master::unicorn':
@@ -136,6 +140,7 @@ class puppet (
       enable               => false,
       master_service_name  => $master_service_name,
       master_service_flags => $master_service_flags,
+      master_package       => $master_package,
     }
     class { '::puppet::master::unicorn':
       ensure             => 'stopped',
