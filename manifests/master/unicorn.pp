@@ -81,22 +81,22 @@ $puppet_group,
       enable    => $enable,
       subscribe => Class['puppet::config'],
     }
-  }
 
-  if $unicorn_conf {
-    File[$unicorn_conf] ~>
-    File['/etc/rc.d/puppetmaster_unicorn'] ~>
-    Service['puppetmaster_unicorn']
-  } else {
-    File['/etc/rc.d/puppetmaster_unicorn'] ~>
-    Service['puppetmaster_unicorn']
-  }
+    if $unicorn_conf {
+      File[$unicorn_conf] ~>
+      File['/etc/rc.d/puppetmaster_unicorn'] ~>
+      Service['puppetmaster_unicorn']
+    } else {
+      File['/etc/rc.d/puppetmaster_unicorn'] ~>
+      Service['puppetmaster_unicorn']
+    }
 
-  if $webserver_frontend {
-    case $webserver_frontend {
-      'nginx': {
-        Service['puppetmaster_unicorn'] ->
-        Service['nginx']
+    if $webserver_frontend {
+      case $webserver_frontend {
+        'nginx': {
+          Service['puppetmaster_unicorn'] ->
+          Service['nginx']
+        }
       }
     }
   }
