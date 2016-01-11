@@ -75,10 +75,12 @@ $puppet_group,
   # the service tries to set the flags, but the rc script won't
   # be available, and then the catalog apply error at that point
   # on every run :(
-  service { 'puppetmaster_unicorn':
-    ensure    => $ensure,
-    enable    => $enable,
-    subscribe => Class['puppet::config'],
+  if $enable != false {
+    service { 'puppetmaster_unicorn':
+      ensure    => $ensure,
+      enable    => $enable,
+      subscribe => Class['puppet::config'],
+    }
   }
 
   if $unicorn_conf {
