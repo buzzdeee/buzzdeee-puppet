@@ -11,6 +11,7 @@ class puppet::config (
   $configtimeout,
   $server,
   $puppet_env,
+  $service_ensure,
 ) {
 
   if $configtimeout {
@@ -85,8 +86,20 @@ class puppet::config (
 
   if $config_defaultsfile {
     # everything important is set in the puppet.conf
+    # However, Ubuntu needs an explicit START
+    if $service_ensure == 'running' {
+      $ defaults_contents = $::operatingsystem ? {
+        'Ubuntu' => 'START=yes',
+        default  => ''
+      }
+    } else {
+      $ defaults_contents = $::operatingsystem ? {
+        'Ubuntu' => 'START=no',
+        default  => ''
+      }
+    }
     file { $config_defaultsfile:
-      content => '';
+      content => $defaults_contents;
     }
   }
 

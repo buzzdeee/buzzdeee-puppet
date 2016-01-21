@@ -181,6 +181,7 @@ class puppet (
     server                         => $server,
     config_defaultsfile            => $config_defaultsfile,
     puppet_env                     => $puppet_env,
+    service_ensure                 => $service_ensure,
   }
 
   if $service_name {
