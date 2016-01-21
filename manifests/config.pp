@@ -90,16 +90,16 @@ class puppet::config (
     if $service_ensure == 'running' {
       $ defaults_contents = $::operatingsystem ? {
         'Ubuntu' => 'START=yes',
-        default  => ''
+        default  => '',
       }
     } else {
       $ defaults_contents = $::operatingsystem ? {
         'Ubuntu' => 'START=no',
-        default  => ''
+        default  => '',
       }
     }
     file { $config_defaultsfile:
-      content => $defaults_contents;
+      content => $defaults_contents,
     }
   }
 
