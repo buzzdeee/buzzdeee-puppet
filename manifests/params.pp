@@ -10,6 +10,7 @@ class puppet::params {
       $puppet_user = 'puppet'
       $puppet_group = 'puppet'
       $master_service_name = 'puppetmaster'
+      $service_name = 'puppet'
       $master_package = 'puppetmaster'
       $service_provider = undef
       $msgpack_package_name = undef
