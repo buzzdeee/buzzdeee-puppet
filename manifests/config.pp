@@ -88,12 +88,12 @@ class puppet::config (
     # everything important is set in the puppet.conf
     # However, Ubuntu needs an explicit START
     if $service_ensure == 'running' {
-      $ defaults_contents = $::operatingsystem ? {
+      $defaults_contents = $::operatingsystem ? {
         'Ubuntu' => 'START=yes',
         default  => '',
       }
     } else {
-      $ defaults_contents = $::operatingsystem ? {
+      $defaults_contents = $::operatingsystem ? {
         'Ubuntu' => 'START=no',
         default  => '',
       }
