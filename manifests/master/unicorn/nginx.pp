@@ -2,7 +2,7 @@
 # takes care about nginx configuration in the unicorn case
 class puppet::master::unicorn::nginx (
 $ensure,
-$unicorn_socket,
+$unicorn_socket_chrooted,
 ) {
 
 
@@ -56,7 +56,7 @@ $unicorn_socket,
 
   ::nginx::resource::upstream { 'puppetmaster_unicorn':
     ensure                => $ensure,
-    members               => [ "unix:${unicorn_socket}", ],
+    members               => [ "unix:${unicorn_socket_chrooted}", ],
     upstream_fail_timeout => '0',
   }
 

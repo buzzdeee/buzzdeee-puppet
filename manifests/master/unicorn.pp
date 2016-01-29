@@ -11,6 +11,7 @@ $unicorn_package,
 $config_dir,
 $unicorn_conf,
 $unicorn_socket,
+$unicorn_socket_chrooted,
 $unicorn_pid,
 $unicorn_flags,
 $webserver_frontend,
@@ -35,8 +36,8 @@ $puppet_group,
   if $webserver_frontend {
     case $webserver_frontend {
       'nginx': { class { '::puppet::master::unicorn::nginx':
-                  ensure         => $webserver_frontend_ensure,
-                  unicorn_socket => $unicorn_socket,
+                  ensure                  => $webserver_frontend_ensure,
+                  unicorn_socket_chrooted => $unicorn_socket_chrooted,
                 }
       }
       default: { fail("${::module_name}: webserver_frontend ${webserver_frontend} not supported with unicorn") }
@@ -50,6 +51,14 @@ $puppet_group,
       group   => '0',
       mode    => '0555',
       content => template('puppet/puppetmaster_unicorn.erb'),
+    }
+
+    if $unicorn_socket {
+      file { dirname($unicorn_socket):
+        ensure => 'directory',
+        owner  => $puppet_user,
+        group  => $puppet_group,
+      }
     }
 
     if $unicorn_conf {
