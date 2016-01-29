@@ -12,7 +12,7 @@ $unicorn_socket,
     include ::nginx
   }
 
-  $vhosts = hiera_hash('nginx::nginx_vhosts', false)
+  $vhosts = hiera_hash('nginx::vhosts', false)
   if $vhosts {
     $vhost_names = keys($vhosts)
     if 'puppet' in $vhost_names {
