@@ -46,9 +46,16 @@ class puppet::params {
       case $::operatingsystem {
         'SLES': {
           $service_name = 'puppet'
-          $service_provider = undef
           $master_service_name = 'puppetmaster'
           $config_defaultsfile = '/etc/sysconfig/puppet'
+          case $::operatingsystemrelease {
+            '12.0': {
+              $service_provider = 'systemd'
+            }
+            default: {
+              $service_provider = 'init'
+            }
+          }
         }
         'OpenSuSE': {
           $service_name = 'puppet.service'
