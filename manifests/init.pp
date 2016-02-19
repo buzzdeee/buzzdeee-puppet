@@ -137,35 +137,35 @@ class puppet (
         fail("${::module_name}: master must be one of 'webrick', 'unicorn', or 'passenger'")
       }
     }
-  } else {
-    class { '::puppet::master::webrick':
-      ensure               => 'stopped',
-      enable               => false,
-      master_service_name  => $master_service_name,
-      master_service_flags => $master_service_flags,
-      master_package       => $master_package,
-    }
-    class { '::puppet::master::unicorn':
-      ensure                  => 'stopped',
-      enable                  => false,
-      rubyversion             => $rubyversion,
-      rubyunicorn             => $puppet::params::rubyunicorn,
-      unicorn_workers         => $unicorn_workers,
-      unicorn_package         => $puppet::params::unicorn_package,
-      config_dir              => $config_dir,
-      unicorn_conf            => $puppet::params::unicorn_conf,
-      unicorn_socket          => $puppet::params::unicorn_socket,
-      unicorn_socket_chrooted => $puppet::params::unicorn_socket_chrooted,
-      unicorn_pid             => $puppet::params::unicorn_pid,
-      unicorn_flags           => $unicorn_flags,
-      puppet_user             => $puppet_user,
-      puppet_group            => $puppet_group,
-      webserver_frontend      => $webserver_frontend,
-    }
-    class { '::puppet::master::passenger':
-      ensure => 'stopped',
-      enable => false,
-    }
+#  } else {
+#    class { '::puppet::master::webrick':
+#      ensure               => 'stopped',
+#      enable               => false,
+#      master_service_name  => $master_service_name,
+#      master_service_flags => $master_service_flags,
+#      master_package       => $master_package,
+#    }
+#    class { '::puppet::master::unicorn':
+#      ensure                  => 'stopped',
+#      enable                  => false,
+#      rubyversion             => $rubyversion,
+#      rubyunicorn             => $puppet::params::rubyunicorn,
+#      unicorn_workers         => $unicorn_workers,
+#      unicorn_package         => $puppet::params::unicorn_package,
+#      config_dir              => $config_dir,
+#      unicorn_conf            => $puppet::params::unicorn_conf,
+#      unicorn_socket          => $puppet::params::unicorn_socket,
+#      unicorn_socket_chrooted => $puppet::params::unicorn_socket_chrooted,
+#      unicorn_pid             => $puppet::params::unicorn_pid,
+#      unicorn_flags           => $unicorn_flags,
+#      puppet_user             => $puppet_user,
+#      puppet_group            => $puppet_group,
+#      webserver_frontend      => $webserver_frontend,
+#    }
+#    class { '::puppet::master::passenger':
+#      ensure => 'stopped',
+#      enable => false,
+#    }
   }
 
   class { '::puppet::install':
