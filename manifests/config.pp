@@ -9,6 +9,7 @@ class puppet::config (
   $preferred_serialization_format,
   $runinterval,
   $configtimeout,
+  $stringify_facts,
   $server,
   $puppet_env,
   $service_ensure,
@@ -61,6 +62,16 @@ class puppet::config (
       section => 'main',
       setting => 'parser',
       value   => $parser,
+    }
+  }
+
+  if $stringify_facts {
+    ini_setting { 'main_stringify_facts':
+      ensure  => 'present',
+      path    => '/etc/puppet/puppet.conf',
+      section => 'main',
+      setting => 'stringify_facts',
+      value   => $stringify_facts,
     }
   }
 

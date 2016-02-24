@@ -86,6 +86,8 @@ class puppet::params {
   $preferred_serialization_format = msgpack
   $parser = undef                   # maybe 'future'
   $runinterval = '1800'
+  $stringify_facts = true       # store facts as strings in PuppetDB, set to false to
+                                # store them as hashes, or arrays
   $configtimeout = '10m'
   $puppet_env = undef           # use the default 'production' environment
   $autosign = undef             # manage CA autosigning, true, false or path to autosign.conf file
