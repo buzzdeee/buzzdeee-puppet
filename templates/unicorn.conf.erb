@@ -2,7 +2,7 @@
 worker_processes <%= @unicorn_workers %>
 working_directory "<%= @config_dir %>"
 listen '<%= @unicorn_socket %>', :backlog => 512
-timeout 120
+timeout '%= @unicorn_timeout %>'
 pid "<%= @unicorn_pid %>"
 
 preload_app true

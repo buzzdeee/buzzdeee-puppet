@@ -37,8 +37,9 @@ class puppet::params {
       $unicorn_flags = "-D -c ${unicorn_conf}"
       $unicorn_workers = '8'
       # nginx runs chrooted, as well as other webservers
-      $unicorn_socket = "/var/www/run/puppet/puppetmaster_unicorn.sock"
-      $unicorn_socket_chrooted = "/run/puppet/puppetmaster_unicorn.sock"
+      $unicorn_socket = '/var/www/run/puppet/puppetmaster_unicorn.sock'
+      $unicorn_timeout = '120'
+      $unicorn_socket_chrooted = '/run/puppet/puppetmaster_unicorn.sock'
       $unicorn_pid = "${run_dir}/puppetmaster_unicorn.pid"
       $unicorn_package = "ruby${rubyversion}-unicorn"
     }
