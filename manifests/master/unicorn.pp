@@ -54,7 +54,9 @@ $puppet_group,
       content => template('puppet/puppetmaster_unicorn.erb'),
     }
 
-    if $unicorn_socket {
+    # The unicorn_socket can be an IP or path,
+    # path is usually fully qualified
+    if $unicorn_socket and $unicorn_socket =~ /^\/.*/ {
       file { dirname($unicorn_socket):
         ensure => 'directory',
         owner  => $puppet_user,
