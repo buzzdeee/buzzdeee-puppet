@@ -18,6 +18,7 @@ $unicorn_flags,
 $webserver_frontend,
 $puppet_user,
 $puppet_group,
+$manage_vhost,
 ) {
 
   if $ensure == 'running' {
@@ -39,6 +40,7 @@ $puppet_group,
       'nginx': { class { '::puppet::master::unicorn::nginx':
                   ensure                  => $webserver_frontend_ensure,
                   unicorn_socket_chrooted => $unicorn_socket_chrooted,
+                  manage_vhost            => $manage_vhost,
                 }
       }
       default: { fail("${::module_name}: webserver_frontend ${webserver_frontend} not supported with unicorn") }

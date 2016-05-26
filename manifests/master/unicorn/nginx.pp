@@ -3,6 +3,7 @@
 class puppet::master::unicorn::nginx (
 $ensure,
 $unicorn_socket_chrooted,
+$manage_vhost,
 ) {
 
 
@@ -12,19 +13,21 @@ $unicorn_socket_chrooted,
     include ::nginx
   }
 
-  $vhosts = hiera_hash('nginx::vhosts', false)
-  if $vhosts {
-    $vhost_names = keys($vhosts)
-    if 'puppet' in $vhost_names {
-      $manage_vhost = false
-    } else {
-      $manage_vhost = true
+  if $manage_vhost {
+    $vhosts = hiera_hash('nginx::vhosts', false)
+    if $vhosts {
+      $vhost_names = keys($vhosts)
+      if 'puppet' in $vhost_names {
+        $real_manage_vhost = false
+      } else {
+        $real_manage_vhost = true
+      }
     }
   } else {
-    $manage_vhost = true
+    $real_manage_vhost = $manage_vhost
   }
 
-  if $manage_vhost {
+  if $real_manage_vhost {
     ::nginx::resource::vhost { 'puppet':
       ensure             => $ensure,
       listen_port        => '8140',

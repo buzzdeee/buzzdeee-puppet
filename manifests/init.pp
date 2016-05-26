@@ -33,6 +33,7 @@ class puppet (
   $webserver_frontend             = $puppet::params::webserverfrontend,
   $puppet_user                    = $puppet::params::puppet_user,
   $puppet_group                   = $puppet::params::puppet_group,
+  $manage_vhost                   = $puppet::params::manage_vhost,
 ) inherits puppet::params {
 
   if $master != false {
@@ -65,6 +66,7 @@ class puppet (
           webserver_frontend      => $webserver_frontend,
           puppet_user             => $puppet_user,
           puppet_group            => $puppet_group,
+          manage_vhost            => $manage_vhost,
           before                  => Class['puppet::master::webrick'],
         }
         class { '::puppet::master::passenger':
@@ -98,6 +100,7 @@ class puppet (
           unicorn_flags           => $unicorn_flags,
           puppet_user             => $puppet_user,
           puppet_group            => $puppet_group,
+          manage_vhost            => $manage_vhost,
           webserver_frontend      => $webserver_frontend,
         }
         class { '::puppet::master::passenger':
@@ -132,6 +135,7 @@ class puppet (
           puppet_user             => $puppet_user,
           puppet_group            => $puppet_group,
           webserver_frontend      => $webserver_frontend,
+          manage_vhost            => $manage_vhost,
           before                  => Class['puppet::master::passenger'],
         }
         class { '::puppet::master::passenger':
@@ -167,6 +171,7 @@ class puppet (
 #      unicorn_flags           => $unicorn_flags,
 #      puppet_user             => $puppet_user,
 #      puppet_group            => $puppet_group,
+#      manage_vhost            => $manage_vhost,
 #      webserver_frontend      => $webserver_frontend,
 #    }
 #    class { '::puppet::master::passenger':

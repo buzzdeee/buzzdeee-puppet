@@ -95,4 +95,7 @@ class puppet::params {
   $server = undef               # use the default 'puppet'
   $package_ensure = 'installed'
   $package_name = 'puppet'
+
+  # Whether this module manages the webservers vhost
+  $manage_vhost = true
 }
