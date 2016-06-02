@@ -13,6 +13,12 @@ class puppet::config (
   $server,
   $puppet_env,
   $service_ensure,
+  $dbhost,
+  $dbuser,
+  $dbpass,
+  $dbname,
+  $dbtable,
+  $puppet_group,
 ) {
 
   if $configtimeout {
@@ -53,6 +59,16 @@ class puppet::config (
       setting => 'autosign',
       value   => $autosign,
     }
+
+    if is_absolute_path($autosign) {
+      file { $autosign:
+        owner   => 'root',
+        group   => $puppet_group,
+        mode    => '0550',
+        content => template('puppet/signing_policy.erb'),
+      }
+    }
+
   }
 
   if $parser {

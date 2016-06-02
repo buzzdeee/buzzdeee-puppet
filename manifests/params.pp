@@ -98,4 +98,10 @@ class puppet::params {
 
   # Whether this module manages the webservers vhost
   $manage_vhost = true
+
+  $dbhost = 'localhost'
+  $dbuser = 'puppetdb'
+  $dbpass = 'puppetdb'
+  $dbname = 'puppetdb'
+  $dbtable = 'autosign_requests'
 }

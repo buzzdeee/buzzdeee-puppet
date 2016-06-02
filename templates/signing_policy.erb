@@ -1,0 +1,40 @@
+#! /bin/bash
+
+DBHOST=<%= @dbhost %>
+DBUSER=<%= @dbuser %>
+DBPASS=<%= @dbpass %>
+DBNAME=<%= @dbname %>
+DBTABLE=<%= @dbtable %>
+
+# The DBTABLE has to exist, with following:
+# create table $DBTABLE (node char(100) primary key, uuid char(199));
+
+csr=$(< /dev/stdin)
+certname=$1
+
+UUID=$(echo "select uuid from ${DBTABLE} where node='${certname}';" | PGPASSWORD=${DBPASS} psql -h ${DBHOST} -U ${DBUSER} -t ${DBNAME} | grep -v '^$')
+
+if [ "X${UUID}" == "X" ];then
+	logger -i -t puppet_autosign no UUID found in database for ${certname}
+	exit 1
+fi
+
+# Get the certificate extension with OID $1 from the csr
+function extension {
+  echo "$csr" | openssl req -noout -text | fgrep -A1 "$1" | tail -n 1 \
+      | sed -e 's/^ *//;s/ *$//'
+}
+
+# This is the challengePassword OID
+psk=$(extension '1.2.840.113549.1.9.7')
+
+echo "autosign $1 with PSK $psk"
+
+if [ "X${psk}" == "X${UUID}" ];then
+	logger -i -t puppet_autosign signing certificate for ${certname}
+	exit 0
+else
+	logger -i -t puppet_autosign not signing certificate for ${certname}: invalid UUID
+	exit 1
+fi
+

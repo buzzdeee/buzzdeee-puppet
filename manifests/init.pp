@@ -34,6 +34,11 @@ class puppet (
   $puppet_user                    = $puppet::params::puppet_user,
   $puppet_group                   = $puppet::params::puppet_group,
   $manage_vhost                   = $puppet::params::manage_vhost,
+  $dbhost                         = $puppet::params::dbhost,
+  $dbuser                         = $puppet::params::dbuser,
+  $dbpass                         = $puppet::params::dbpass,
+  $dbname                         = $puppet::params::dbname,
+  $dbtable                        = $puppet::params::dbtable,
 ) inherits puppet::params {
 
   if $master != false {
@@ -198,6 +203,12 @@ class puppet (
     server                         => $server,
     config_defaultsfile            => $config_defaultsfile,
     puppet_env                     => $puppet_env,
+    dbuser                         => $dbuser,
+    dbhost                         => $dbhost,
+    dbpass                         => $dbpass,
+    dbname                         => $dbname,
+    dbtable                        => $dbtable,
+    puppet_group                   => $puppet_group,
     service_ensure                 => $service_ensure,
   }
 
