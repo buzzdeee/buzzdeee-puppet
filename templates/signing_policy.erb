@@ -1,4 +1,4 @@
-#! /bin/bash
+#!/bin/sh
 
 DBHOST=<%= @dbhost %>
 DBUSER=<%= @dbuser %>
@@ -21,12 +21,12 @@ fi
 
 # Get the certificate extension with OID $1 from the csr
 function extension {
-  echo "$csr" | openssl req -noout -text | fgrep -A1 "$1" | tail -n 1 \
-      | sed -e 's/^ *//;s/ *$//'
+  echo "$csr" | openssl req -noout -text | fgrep "$1" | tail -n 1 \
+      | awk -F ':' '{print $2}'
 }
 
 # This is the challengePassword OID
-psk=$(extension '1.2.840.113549.1.9.7')
+psk=$(extension 'challengePassword')
 
 echo "autosign $1 with PSK $psk"
 
