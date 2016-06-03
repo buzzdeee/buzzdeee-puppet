@@ -15,6 +15,7 @@ class puppet::params {
       $service_provider = undef
       $msgpack_package_name = undef
       $config_defaultsfile = '/etc/default/puppet'
+      $package_name = 'puppet'
     }
     'OpenBSD': {
       if (versioncmp( $::kernelversion, '5.7' ) < 0) {
@@ -42,6 +43,7 @@ class puppet::params {
       $unicorn_socket_chrooted = '/run/puppet/puppetmaster_unicorn.sock'
       $unicorn_pid = "${run_dir}/puppetmaster_unicorn.pid"
       $unicorn_package = "ruby${rubyversion}-unicorn"
+      $package_name = 'puppet'
     }
     'Suse': {
       case $::operatingsystem {
@@ -52,9 +54,11 @@ class puppet::params {
           case $::operatingsystemrelease {
             '12.0': {
               $service_provider = 'systemd'
+              $package_name = 'rubygem-puppet'
             }
             default: {
               $service_provider = 'init'
+              $package_name = 'puppet'
             }
           }
         }
@@ -63,6 +67,7 @@ class puppet::params {
           $service_provider = 'systemd'
           $master_service_name = 'puppetmaster'
           $config_defaultsfile = undef
+          $package_name = 'puppet'
         }
         default: {
           fail("${::module_name}: unsupported platform: ${::osfamily}/${::operatingsystem}")
@@ -94,7 +99,6 @@ class puppet::params {
   $autosign = undef             # manage CA autosigning, true, false or path to autosign.conf file
   $server = undef               # use the default 'puppet'
   $package_ensure = 'installed'
-  $package_name = 'puppet'
 
   # Whether this module manages the webservers vhost
   $manage_vhost = true

@@ -12,7 +12,7 @@ DBTABLE=<%= @dbtable %>
 csr=$(< /dev/stdin)
 certname=$1
 
-UUID=$(echo "select uuid from ${DBTABLE} where node='${certname}';" | PGPASSWORD=${DBPASS} psql -h ${DBHOST} -U ${DBUSER} -t ${DBNAME} | grep -v '^$')
+UUID=$(echo "select uuid from ${DBTABLE} where node='${certname}';" | PGPASSWORD=${DBPASS} psql -h ${DBHOST} -U ${DBUSER} -t ${DBNAME} | grep -v '^$' | tr -d ' ')
 
 if [ "X${UUID}" == "X" ];then
 	logger -i -t puppet_autosign no UUID found in database for ${certname}
