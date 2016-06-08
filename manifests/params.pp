@@ -2,9 +2,6 @@
 # steers the parameters that drive the class
 class puppet::params {
 
-  $config_dir = '/etc/puppet'
-  $run_dir = '/var/puppet/run'
-
   case $::osfamily {
     'Debian': {
       $puppet_user = 'puppet'
@@ -16,6 +13,8 @@ class puppet::params {
       $msgpack_package_name = undef
       $config_defaultsfile = '/etc/default/puppet'
       $package_name = 'puppet'
+      $config_dir = '/etc/puppet'
+      $run_dir = '/var/puppet/run'
     }
     'OpenBSD': {
       if (versioncmp( $::kernelversion, '5.7' ) < 0) {
@@ -26,6 +25,13 @@ class puppet::params {
         $service_name = 'puppet'
         $master_service_name = 'puppetmaster'
         $rubyversion = '22'
+      }
+      if (versioncmp( $::kernelversion, '6.0' ) < 0) {
+        $config_dir = '/etc/puppet'
+        $run_dir = '/var/puppet/run'
+      } else {
+        $config_dir = '/etc/puppetlabs/puppet'
+        $run_dir = '/var/puppetlabs/puppet/run'
       }
       $puppet_user = '_puppet'
       $puppet_group = '_puppet'
@@ -46,6 +52,8 @@ class puppet::params {
       $package_name = 'puppet'
     }
     'Suse': {
+      $config_dir = '/etc/puppet'
+      $run_dir = '/var/puppet/run'
       case $::operatingsystem {
         'SLES': {
           $service_name = 'puppet'
