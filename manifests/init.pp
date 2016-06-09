@@ -1,8 +1,6 @@
 # the main class of the module
 
 class puppet (
-  $config_dir                     = $puppet::params::config_dir,
-  $run_dir                        = $puppet::params::run_dir,
   $master                         = $puppet::params::master,
   $configtimeout                  = $puppet::params::configtimeout,
   $runinterval                    = $puppet::params::runinterval,
@@ -61,7 +59,6 @@ class puppet (
           rubyunicorn             => $puppet::params::rubyunicorn,
           unicorn_workers         => $unicorn_workers,
           unicorn_package         => $puppet::params::unicorn_package,
-          config_dir              => $config_dir,
           unicorn_conf            => $puppet::params::unicorn_conf,
           unicorn_socket          => $unicorn_socket,
           unicorn_timeout         => $unicorn_timeout,
@@ -96,7 +93,6 @@ class puppet (
           rubyunicorn             => $puppet::params::rubyunicorn,
           unicorn_workers         => $unicorn_workers,
           unicorn_package         => $puppet::params::unicorn_package,
-          config_dir              => $config_dir,
           unicorn_conf            => $puppet::params::unicorn_conf,
           unicorn_socket          => $unicorn_socket,
           unicorn_timeout         => $unicorn_timeout,
@@ -130,7 +126,6 @@ class puppet (
           rubyunicorn             => $puppet::params::rubyunicorn,
           unicorn_workers         => $unicorn_workers,
           unicorn_package         => $puppet::params::unicorn_package,
-          config_dir              => $config_dir,
           unicorn_conf            => $puppet::params::unicorn_conf,
           unicorn_socket          => $unicorn_socket,
           unicorn_timeout         => $unicorn_timeout,
@@ -167,7 +162,6 @@ class puppet (
 #      rubyunicorn             => $puppet::params::rubyunicorn,
 #      unicorn_workers         => $unicorn_workers,
 #      unicorn_package         => $puppet::params::unicorn_package,
-#      config_dir              => $config_dir,
 #      unicorn_conf            => $puppet::params::unicorn_conf,
 #      unicorn_socket          => $unicorn_socket,
 #      unicorn_timeout         => $unicorn_timeout,

@@ -13,8 +13,6 @@ class puppet::params {
       $msgpack_package_name = undef
       $config_defaultsfile = '/etc/default/puppet'
       $package_name = 'puppet'
-      $config_dir = '/etc/puppet'
-      $run_dir = '/var/puppet/run'
     }
     'OpenBSD': {
       if (versioncmp( $::kernelversion, '5.7' ) < 0) {
@@ -26,13 +24,6 @@ class puppet::params {
         $master_service_name = 'puppetmaster'
         $rubyversion = '22'
       }
-      if (versioncmp( $::kernelversion, '6.0' ) < 0) {
-        $config_dir = '/etc/puppet'
-        $run_dir = '/var/puppet/run'
-      } else {
-        $config_dir = '/etc/puppetlabs/puppet'
-        $run_dir = '/var/puppetlabs/puppet/run'
-      }
       $puppet_user = '_puppet'
       $puppet_group = '_puppet'
       $service_provider = undef
@@ -40,20 +31,18 @@ class puppet::params {
       $msgpack_package_name = "ruby${rubyversion}-msgpack"
       $config_defaultsfile = undef
       $rubyunicorn = "/usr/local/bin/unicorn${rubyversion}"
-      $unicorn_conf = "${config_dir}/unicorn.conf"
+      $unicorn_conf = "${::settings::confdir}/unicorn.conf"
       $unicorn_flags = "-D -c ${unicorn_conf}"
       $unicorn_workers = '8'
       # nginx runs chrooted, as well as other webservers
       $unicorn_socket = '/var/www/run/puppet/puppetmaster_unicorn.sock'
       $unicorn_timeout = '120'
       $unicorn_socket_chrooted = '/run/puppet/puppetmaster_unicorn.sock'
-      $unicorn_pid = "${run_dir}/puppetmaster_unicorn.pid"
+      $unicorn_pid = "${::settings::rundir}/puppetmaster_unicorn.pid"
       $unicorn_package = "ruby${rubyversion}-unicorn"
       $package_name = 'puppet'
     }
     'Suse': {
-      $config_dir = '/etc/puppet'
-      $run_dir = '/var/puppet/run'
       case $::operatingsystem {
         'SLES': {
           $service_name = 'puppet'

@@ -24,7 +24,7 @@ class puppet::config (
   if $configtimeout {
     ini_setting { 'agent_configtimeout':
       ensure  => 'present',
-      path    => '/etc/puppet/puppet.conf',
+      path    => $::settings::config,
       section => 'agent',
       setting => 'configtimeout',
       value   => $configtimeout,
@@ -34,7 +34,7 @@ class puppet::config (
   if $runinterval {
     ini_setting { 'agent_runinterval':
       ensure  => 'present',
-      path    => '/etc/puppet/puppet.conf',
+      path    => $::settings::config,
       section => 'agent',
       setting => 'runinterval',
       value   => $runinterval,
@@ -44,7 +44,7 @@ class puppet::config (
   if $server {
     ini_setting { 'agent_server':
       ensure  => 'present',
-      path    => '/etc/puppet/puppet.conf',
+      path    => $::settings::config,
       section => 'agent',
       setting => 'server',
       value   => $server,
@@ -54,7 +54,7 @@ class puppet::config (
   if $autosign {
     ini_setting { 'main_autosign':
       ensure  => 'present',
-      path    => '/etc/puppet/puppet.conf',
+      path    => $::settings::config,
       section => 'main',
       setting => 'autosign',
       value   => $autosign,
@@ -74,7 +74,7 @@ class puppet::config (
   if $parser {
     ini_setting { 'main_parser':
       ensure  => 'present',
-      path    => '/etc/puppet/puppet.conf',
+      path    => $::settings::config,
       section => 'main',
       setting => 'parser',
       value   => $parser,
@@ -84,7 +84,7 @@ class puppet::config (
   if $stringify_facts {
     ini_setting { 'main_stringify_facts':
       ensure  => 'present',
-      path    => '/etc/puppet/puppet.conf',
+      path    => $::settings::config,
       section => 'main',
       setting => 'stringify_facts',
       value   => $stringify_facts,
@@ -94,7 +94,7 @@ class puppet::config (
   if $enable_msgpack_serialization {
     ini_setting { 'main_preferred_serialization_format':
       ensure  => 'present',
-      path    => '/etc/puppet/puppet.conf',
+      path    => $::settings::config,
       section => 'main',
       setting => 'preferred_serialization_format',
       value   => $preferred_serialization_format,
@@ -104,7 +104,7 @@ class puppet::config (
   if $puppet_env {
     ini_setting { 'main_environment':
       ensure  => 'present',
-      path    => '/etc/puppet/puppet.conf',
+      path    => $::settings::config,
       section => 'main',
       setting => 'environment',
       value   => $puppet_env,
