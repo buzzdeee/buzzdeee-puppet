@@ -19,6 +19,6 @@ $master_package,
     ensure    => $ensure,
     enable    => $enable,
     flags     => $master_service_flags,
-    subscribe => Class['puppet::config']
+    subscribe => Class['puppet::config'],
   }
 }

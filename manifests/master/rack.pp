@@ -12,10 +12,10 @@ class puppet::master::rack (
   $path = dirname($file)
 
   file { $path:
+    ensure => 'directory',
     owner  => $user,
     group  => $group,
     mode   => '0755',
-    ensure => 'directory',
     
   }
 

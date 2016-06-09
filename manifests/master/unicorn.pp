@@ -75,7 +75,7 @@ $manage_vhost,
       }
     }
 
-    class { 'puppet::master::rack':
+    class { '::puppet::master::rack':
       ensure => $files_ensure,
       user   => $puppet_user,
       group  => $puppet_group,
@@ -109,6 +109,9 @@ $manage_vhost,
         'nginx': {
           Service['puppetmaster_unicorn'] ->
           Service['nginx']
+        }
+        default: {
+          error("${::module_name} doesn't support webserver_frontent: $webserver_frontend")
         }
       }
     }
