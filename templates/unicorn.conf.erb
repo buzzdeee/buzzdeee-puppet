@@ -1,6 +1,6 @@
 # This file is managed via Puppet
 worker_processes <%= @unicorn_workers %>
-working_directory "<%= scope['::settings::confdir'] %>"
+working_directory "<%= @::puppet_confdir %>"
 listen '<%= @unicorn_socket %>', :backlog => 512
 timeout <%= @unicorn_timeout %>
 pid "<%= @unicorn_pid %>"

@@ -79,7 +79,7 @@ $manage_vhost,
       ensure => $files_ensure,
       user   => $puppet_user,
       group  => $puppet_group,
-      file   => "${::settings::confdir}/config.ru",
+      file   => "${::puppet_confdir}/config.ru",
       before => Service['puppetmaster_unicorn'],
     }
 

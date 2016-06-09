@@ -11,6 +11,14 @@ rescue LoadError => e
   load rb_file if File.exists?(rb_file) or raise e
 end
 
+Facter.add(:puppet_config) do
+  setcode do
+    # This will be nil if Puppet is not available.
+    Facter::Util::PuppetSettings.with_puppet do
+      Puppet[:config]
+    end
+  end
+end
 Facter.add(:puppet_confdir) do
   setcode do
     # This will be nil if Puppet is not available.
@@ -19,11 +27,11 @@ Facter.add(:puppet_confdir) do
     end
   end
 end
-Facter.add(:puppet_config) do
+Facter.add(:puppet_rundir) do
   setcode do
     # This will be nil if Puppet is not available.
     Facter::Util::PuppetSettings.with_puppet do
-      Puppet[:config]
+      Puppet[:rundir]
     end
   end
 end

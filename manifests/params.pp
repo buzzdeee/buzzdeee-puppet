@@ -31,14 +31,14 @@ class puppet::params {
       $msgpack_package_name = "ruby${rubyversion}-msgpack"
       $config_defaultsfile = undef
       $rubyunicorn = "/usr/local/bin/unicorn${rubyversion}"
-      $unicorn_conf = "${::settings::confdir}/unicorn.conf"
+      $unicorn_conf = "${::puppet_confdir}/unicorn.conf"
       $unicorn_flags = "-D -c ${unicorn_conf}"
       $unicorn_workers = '8'
       # nginx runs chrooted, as well as other webservers
       $unicorn_socket = '/var/www/run/puppet/puppetmaster_unicorn.sock'
       $unicorn_timeout = '120'
       $unicorn_socket_chrooted = '/run/puppet/puppetmaster_unicorn.sock'
-      $unicorn_pid = "${::settings::rundir}/puppetmaster_unicorn.pid"
+      $unicorn_pid = "${::puppet_rundir}/puppetmaster_unicorn.pid"
       $unicorn_package = "ruby${rubyversion}-unicorn"
       $package_name = 'puppet'
     }
