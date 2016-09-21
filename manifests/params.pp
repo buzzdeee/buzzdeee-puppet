@@ -18,12 +18,11 @@ class puppet::params {
       if (versioncmp( $::kernelversion, '5.7' ) < 0) {
         $service_name = 'puppetd'
         $master_service_name = 'puppetmasterd'
-        $rubyversion = '21'
       } else {
         $service_name = 'puppet'
         $master_service_name = 'puppetmaster'
-        $rubyversion = '22'
       }
+      $rubyversion = regsubst($::rubyversion, '^(\d+)\.(\d+)\.(\d+)$', '\1\2')
       $puppet_user = '_puppet'
       $puppet_group = '_puppet'
       $service_provider = undef
@@ -92,7 +91,11 @@ class puppet::params {
   $runinterval = '1800'
   $stringify_facts = true       # store facts as strings in PuppetDB, set to false to
                                 # store them as hashes, or arrays
-  $configtimeout = '10m'
+  if (versioncmp($::puppetversion, '4') < 0) {
+    $configtimeout = '10m'
+  } else {
+    $configtimeout = undef
+  }
   $puppet_env = undef           # use the default 'production' environment
   $autosign = undef             # manage CA autosigning, true, false or path to autosign.conf file
   $server = undef               # use the default 'puppet'
