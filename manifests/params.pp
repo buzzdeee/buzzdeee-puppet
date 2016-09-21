@@ -79,6 +79,8 @@ class puppet::params {
     }
   }
 
+  # Default daemon on OpenBSD logs to daemon as well as messages :(
+  $syslogfacility = 'user'
   $service_ensure = 'running'
   $service_enable = true
   $master = false  # can be: webrick, unicorn, passenger

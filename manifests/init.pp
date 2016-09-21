@@ -39,6 +39,7 @@ class puppet (
   $dbpass                         = $puppet::params::dbpass,
   $dbname                         = $puppet::params::dbname,
   $dbtable                        = $puppet::params::dbtable,
+  $syslogfacility                 = $puppet::params::syslogfacility,
 ) inherits puppet::params {
 
   if $master != false {
@@ -196,6 +197,7 @@ class puppet (
     configtimeout                  => $configtimeout,
     runinterval                    => $runinterval,
     stringify_facts                => $stringify_facts,
+    syslogfacility                 => $syslogfacility,
     server                         => $server,
     config_defaultsfile            => $config_defaultsfile,
     puppet_env                     => $puppet_env,

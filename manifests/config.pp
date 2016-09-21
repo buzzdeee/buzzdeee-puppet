@@ -11,6 +11,7 @@ class puppet::config (
   $configtimeout,
   $stringify_facts,
   $server,
+  $syslogfacility,
   $puppet_env,
   $service_ensure,
   $dbhost,
@@ -78,6 +79,16 @@ class puppet::config (
       section => 'main',
       setting => 'parser',
       value   => $parser,
+    }
+  }
+
+  if $syslogfacility {
+    ini_setting { 'main_syslogfacility':
+      ensure  => 'present',
+      path    => $::puppet_config,
+      section => 'main',
+      setting => 'syslogfacility',
+      value   => $syslogfacility,
     }
   }
 
