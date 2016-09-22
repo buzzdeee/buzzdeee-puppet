@@ -30,7 +30,7 @@ class puppet (
   $unicorn_workers                = $puppet::params::unicorn_workers,
   $unicorn_timeout                = $puppet::params::unicorn_timeout,
   $unicorn_socket                 = $puppet::params::unicorn_socket,
-  $webserver_frontend             = $puppet::params::webserverfrontend,
+  $webserver_frontend             = $puppet::params::webserver_frontend,
   $puppet_user                    = $puppet::params::puppet_user,
   $puppet_group                   = $puppet::params::puppet_group,
   $manage_vhost                   = $puppet::params::manage_vhost,
