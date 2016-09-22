@@ -94,3 +94,11 @@ Facter.add(:puppet_cacrl) do
     end
   end
 end
+Facter.add(:puppet_hostcrl) do
+  setcode do
+    # This will be nil if Puppet is not available.
+    Facter::Util::PuppetSettings.with_puppet do
+      Puppet[:hostcrl]
+    end
+  end
+end
