@@ -21,6 +21,12 @@ $manage_vhost,
 ) {
 
   if $ensure == 'running' {
+
+    package { "ruby${rubyversion}-rack":
+      ensure => 'installed',
+      before => Service['puppetmaster_unicorn'],
+    }
+
     $files_ensure = 'file'
     $webserver_frontend_ensure = 'present'
     package { $unicorn_package:
