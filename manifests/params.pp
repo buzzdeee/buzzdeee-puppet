@@ -88,6 +88,7 @@ class puppet::params {
   $webserver_frontend = undef       # can be: nginx, apache2
   $client_service_flags = undef
   $enable_msgpack_serialization = undef
+  $disable_warnings = undef
   $preferred_serialization_format = msgpack
   $parser = undef                   # maybe 'future'
   $runinterval = '1800'

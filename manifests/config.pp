@@ -7,6 +7,7 @@ class puppet::config (
   $config_defaultsfile,
   $enable_msgpack_serialization,
   $preferred_serialization_format,
+  $disable_warnings,
   $runinterval,
   $configtimeout,
   $stringify_facts,
@@ -109,6 +110,16 @@ class puppet::config (
       section => 'main',
       setting => 'preferred_serialization_format',
       value   => $preferred_serialization_format,
+    }
+  }
+
+  if $disable_warnings {
+    ini_setting { 'main_disable_warnings':
+      ensure  => 'present',
+      path    => $::puppet_config,
+      section => 'main',
+      setting => 'disable_warnings',
+      value   => $disable_warnings,
     }
   }
 
