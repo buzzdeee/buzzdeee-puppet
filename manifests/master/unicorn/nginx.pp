@@ -58,11 +58,12 @@ $manage_vhost,
   }
 
   ::nginx::resource::upstream { 'puppetmaster_unicorn':
-    ensure                => $ensure,
-    members               => [ "unix:${unicorn_socket_chrooted}", ],
-    upstream_fail_timeout => '0',
+    ensure  => $ensure,
+    members => {
+      "unix:${unicorn_socket_chrooted}" => {
+        fail_timeout => '0',
+      },
+    }
   }
-
-  
 
 }
