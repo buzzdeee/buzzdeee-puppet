@@ -2,7 +2,7 @@
 # steers the parameters that drive the class
 class puppet::params {
 
-  case $::osfamily {
+  case $facts['os']['family'] {
     'Debian': {
       $puppet_user = 'puppet'
       $puppet_group = 'puppet'
@@ -15,14 +15,14 @@ class puppet::params {
       $package_name = 'puppet'
     }
     'OpenBSD': {
-      if (versioncmp( $::kernelversion, '5.7' ) < 0) {
+      if (versioncmp( $facts['kernelversion'], '5.7' ) < 0) {
         $service_name = 'puppetd'
         $master_service_name = 'puppetmasterd'
       } else {
         $service_name = 'puppet'
         $master_service_name = 'puppetmaster'
       }
-      $rubyversion = regsubst($::rubyversion, '^(\d+)\.(\d+)\.(\d+)$', '\1\2')
+      $rubyversion = regsubst($facts['ruby']['version'], '^(\d+)\.(\d+)\.(\d+)$', '\1\2')
       $puppet_user = '_puppet'
       $puppet_group = '_puppet'
       $service_provider = undef
@@ -42,12 +42,12 @@ class puppet::params {
       $package_name = 'puppet'
     }
     'Suse': {
-      case $::operatingsystem {
+      case $facts['os']['name'] {
         'SLES': {
           $service_name = 'puppet'
           $master_service_name = 'puppetmaster'
           $config_defaultsfile = '/etc/sysconfig/puppet'
-          case $::operatingsystemrelease {
+          case $facts['os']['release']['full']{
             '12.0': {
               $service_provider = 'systemd'
               $package_name = 'rubygem-puppet'
@@ -66,7 +66,7 @@ class puppet::params {
           $package_name = 'puppet'
         }
         default: {
-          fail("${::module_name}: unsupported platform: ${::osfamily}/${::operatingsystem}")
+          fail("${module_name}: unsupported platform: ${facts['os']['family']}/${facts['os']['name']}")
         }
       }
       $master_package = undef
@@ -75,7 +75,7 @@ class puppet::params {
       $msgpack_package_name = undef
     }
     default: {
-      fail("${::module_name}: unsupported platform: ${::osfamily}")
+      fail("${module_name}: unsupported platform: ${facts['os']['family']}")
     }
   }
 
@@ -94,7 +94,7 @@ class puppet::params {
   $runinterval = '1800'
   $stringify_facts = true       # store facts as strings in PuppetDB, set to false to
                                 # store them as hashes, or arrays
-  if (versioncmp($::puppetversion, '4') < 0) {
+  if (versioncmp($facts['puppetversion'], '4') < 0) {
     $configtimeout = '10m'
   } else {
     $configtimeout = undef
