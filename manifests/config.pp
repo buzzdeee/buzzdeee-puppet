@@ -2,7 +2,7 @@
 # takes care about the Puppet configuration
 
 class puppet::config (
-  $autosign,
+  Stdlib::Absolutepath $autosign,
   $parser,
   $config_defaultsfile,
   $enable_msgpack_serialization,
@@ -62,15 +62,12 @@ class puppet::config (
       value   => $autosign,
     }
 
-    if is_absolute_path($autosign) {
-      file { $autosign:
-        owner   => 'root',
-        group   => $puppet_group,
-        mode    => '0550',
-        content => template('puppet/signing_policy.erb'),
-      }
+    file { $autosign:
+      owner   => 'root',
+      group   => $puppet_group,
+      mode    => '0550',
+      content => template('puppet/signing_policy.erb'),
     }
-
   }
 
   if $parser {
