@@ -2,7 +2,7 @@
 # takes care about the Puppet configuration
 
 class puppet::config (
-  Stdlib::Absolutepath $autosign,
+  $autosign,
   $parser,
   $config_defaultsfile,
   $enable_msgpack_serialization,
