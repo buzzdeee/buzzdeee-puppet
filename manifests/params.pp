@@ -99,6 +99,7 @@ class puppet::params {
   } else {
     $configtimeout = undef
   }
+  $include_legacy_facts = true  # true as long as https://github.com/voxpupuli/puppetboard/issues/960
   $puppet_env = undef           # use the default 'production' environment
   $autosign = undef             # manage CA autosigning, true, false or path to autosign.conf file
   $server = undef               # use the default 'puppet'

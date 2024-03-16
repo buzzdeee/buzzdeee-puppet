@@ -3,6 +3,7 @@
 class puppet (
   $master                         = $puppet::params::master,
   $configtimeout                  = $puppet::params::configtimeout,
+  $include_legacy_facts 	  = $puppet::params::include_legacy_facts,
   $runinterval                    = $puppet::params::runinterval,
   $stringify_facts                = $puppet::params::stringify_facts,
   $autosign                       = $puppet::params::autosign,
@@ -197,6 +198,7 @@ class puppet (
     preferred_serialization_format => $preferred_serialization_format,
     disable_warnings               => $disable_warnings,
     configtimeout                  => $configtimeout,
+    include_legacy_facts           => $include_legacy_facts,
     runinterval                    => $runinterval,
     stringify_facts                => $stringify_facts,
     syslogfacility                 => $syslogfacility,

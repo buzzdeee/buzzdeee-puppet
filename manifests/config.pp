@@ -21,6 +21,7 @@ class puppet::config (
   $dbname,
   $dbtable,
   $puppet_group,
+  $include_legacy_facts,
 ) {
 
   if $configtimeout {
@@ -30,6 +31,16 @@ class puppet::config (
       section => 'agent',
       setting => 'configtimeout',
       value   => $configtimeout,
+    }
+  }
+
+  if $include_legacy_facts {
+    ini_setting { 'include_legacy_facts':
+      ensure  => 'present',
+      path    => $::puppet_config,
+      section => 'main',
+      setting => 'include_legacy_facts',
+      value   => $include_legacy_facts,
     }
   }
 
