@@ -12,7 +12,7 @@ class puppet::params {
       $service_provider = undef
       $msgpack_package_name = undef
       $config_defaultsfile = '/etc/default/puppet'
-      $package_name = 'puppet'
+      $package_name = 'puppet%8'
     }
     'OpenBSD': {
       if (versioncmp( $facts['kernelversion'], '5.7' ) < 0) {
