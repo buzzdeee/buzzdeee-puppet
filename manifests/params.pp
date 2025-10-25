@@ -39,7 +39,7 @@ class puppet::params {
       $unicorn_socket_chrooted = '/run/puppet/puppetmaster_unicorn.sock'
       $unicorn_pid = "${::puppet_rundir}/puppetmaster_unicorn.pid"
       $unicorn_package = "ruby${rubyversion}-unicorn"
-      $package_name = 'puppet'
+      $package_name = 'openvox'
     }
     'Suse': {
       case $facts['os']['name'] {
